@@ -51,11 +51,9 @@ To set up your development environment:
 
 ### Updating Docker Image
 
-We are trying to ensure that we keep CKAN as its most "vanilla" level but the v2.6.3 Dockerfile is not the best. So we've made a few edits to make a more seamless experience.
-
 To update the `codeforafrica/ckan:latest` Docker image:
 ```sh
-cd contrib/ckan
+git clone https://github.com/ckan/ckan.git && git checkout ckan-2.6.3 && cd ckan
 docker build -t codeforafrica/ckan:latest .
 ```
 
