@@ -1,3 +1,4 @@
+# DO NOT USE 
 # docker build . -t ckan && docker run -d -p 80:5000 --link db:db --link redis:redis --link solr:solr ckan
 
 FROM debian:jessie
@@ -16,6 +17,10 @@ RUN apt-get -q -y update && apt-get -q -y upgrade && DEBIAN_FRONTEND=noninteract
         libpq-dev \
         git-core \
 	&& apt-get -q clean
+
+# Download CKAN
+RUN git clone https://github.com/ckan/ckan.git /ckan
+WORKDIR /ckan
 
 # SetUp Virtual Environment CKAN
 RUN mkdir -p $CKAN_HOME $CKAN_CONFIG $CKAN_STORAGE_PATH
