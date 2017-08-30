@@ -1,5 +1,5 @@
 # openAFRICA
-*Africa's largest volunteer-driven open data portal.*
+*The continent's largest volunteer-driven open data portal.*
 
 ![CKAN version](https://img.shields.io/badge/CKAN-v2.6.3-brightgreen.svg)
 
