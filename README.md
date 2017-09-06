@@ -46,7 +46,8 @@ Please report on security vulnerabilities to support@codeforafrica.org. These wi
 
 To set up your development environment:
 
-?
+Use the Dockerfile to set up a ckan instance.
+The ckan instance includes a docker-compose.yml in this path: /contrib/docker to start up services.
 
 
 ### Updating Docker Image
