@@ -15,6 +15,8 @@ The ckan extensions we are using include:
 
 - ckanext-openafrica - https://github.com/CodeForAfrica/ckanext-openafrica
 - ckanext-harvester - ?
+- ckanext-socialite (experimental) - https://github.com/CodeForAfricaLabs/ckanext-socialite
+- ckanext-social - https://github.com/CodeForAfricaLabs/ckanext-social
 
 
 ---
@@ -28,10 +30,13 @@ To get you started, here are few pointers:
 - We have a number of Github issues to work through here:
   - openAFRICA deploy: https://github.com/CodeForAfricaLabs/openAFRICA/issues
   - ckanext-openafrica: https://github.com/CodeForAfrica/ckanext-openafrica/issues
+  - ckanext-socialite: https://github.com/CodeForAfricaLabs/ckanext-socialite/issues
+  - ckanext-social: https://github.com/CodeForAfricaLabs/ckanext-social/issues
 - If you believe an issue is with CKAN core or related extenstions, post them here:
   - CKAN core: https://github.com/ckan/ckan/issues
   - ckanext-harvester: ?
-- Check out the [development docs](#development) to get started on this repo locally.
+
+Check out the [development docs](#development) to get started on this repo locally.
 
 
 ### Security Vulnerabilities
