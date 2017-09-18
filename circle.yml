@@ -1,0 +1,4 @@
+general:
+  branches:
+    ignore:
+      - update_dockerfile # list of branches to ignore
