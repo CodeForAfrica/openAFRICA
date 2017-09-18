@@ -1,4 +1,4 @@
-# docker build . -t ckan && docker run -d -p 80:5000 --link db:db --link redis:redis --link solr:solr ckan
+# docker build . -t ckan && docker run -d -p 5000:5000 --link db:db --link redis:redis --link solr:solr ckan
 
 FROM debian:jessie
 MAINTAINER Open Knowledge
