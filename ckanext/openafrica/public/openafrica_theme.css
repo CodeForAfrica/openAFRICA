@@ -1,0 +1,913 @@
+body {
+  background-color: #3d3d3d;
+}
+
+.account-masthead {
+  background-color: rgb(40, 40, 40);
+}
+
+.hero {
+  background: url(/cmx-home.jpg);
+  padding: 60px 0;
+}
+
+/* ========================================================================
+   The main nav bar that contains the site logo, nav links, and search
+   ======================================================================== */
+
+.navbar .brand {
+  background-color: #151f31;
+  padding: 15px 83px;
+  max-width: 194px;
+}
+
+.navbar-inner {
+  border: none;
+  background: #283858;
+  border-radius: 0px;
+}
+
+.navbar {
+  margin: 0px;
+  font-weight: 200;
+  font-size: 15px;
+  padding-bottom: 60px;
+  /*This was to allow the main to flow down and show the breadcrumbs*/
+}
+
+.navbar .nav {
+  margin-bottom: 17px;
+  float: none;
+}
+
+.navbar .btn-navbar {
+  position: absolute;
+  top: 13px;
+  right: 25px;
+}
+
+.navbar .btn-navbar, .navbar .btn-navbar:hover {
+  background: #FFFFFF;
+}
+
+.navbar .btn-navbar .icon-bar {
+  background-color: #151f31;
+}
+
+.navbar .nav>li>a {
+  color: #ffffff;
+  text-shadow: none;
+  padding: 10px 15px 0px;
+  letter-spacing: 1px;
+}
+
+.navbar .nav>li>a:focus, .navbar .nav>li>a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav-collapse.collapse {
+  vertical-align: middle;
+}
+
+.navbar-fixed-top .container {
+width: auto;!important;
+}
+.navbar .nav li.dropdown.open>.dropdown-toggle {
+  background-color: #283858;
+  color: #ffffff;
+}
+
+.dropdown-menu>li>a:hover {
+  background: #283858;
+}
+
+/* Index search snippet */
+
+.homepage {
+  background-color: #121E34;
+  color: #ffffff;
+}
+
+.homepage .module-search {
+  text-align: center;
+  padding: 0px;
+  background-color: #121E34;
+  /*we added this*/
+  margin: 0px 0 0 0;
+}
+
+.highlighted {
+  color: #2F9DE6;
+  font-weight: bolder;
+}
+.homepage .search-form .search-input.search-giant input {
+  padding: 25px 100px 25px 20px;
+  width: 600px;
+  border: none;
+  box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.3);
+  border-radius: 3px;
+  font-size: 24px;
+  font-weight: 100;
+  line-height: 1.0em;
+}
+
+.homepage .search-giant {
+  display: inline-block;
+}
+
+.homepage .module-search .module-content .heading {
+  margin: 10px 0px 10px 0px;
+  font-size: 2.1em;
+  font-weight: 100;
+  letter-spacing: 0.05em;
+}
+
+.homepage .module-search .module-content h5 {
+  margin: 0px 0px 40px 0px;
+  font-size: 1.25em;
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  color: #BDBDBD;
+}
+
+.homepage .module-search .module-content, .organization-page.module-content {
+  padding: 130px 0px;
+  margin: 0px;
+  height: auto;
+  /*height: 250px;*/
+  background: url(/bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.homepage .joined-orgs-msg {
+  padding: 50px 0px 50px 0px;
+  color: #fff;
+  text-align: center;
+  font-weight: 100;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+}
+
+.homepage .joined-orgs-msg a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.search-form {
+  border: none;
+}
+
+.notice {
+  padding: 20px;
+}
+
+.homepage .module-search .module-content .notice h5 {
+  margin: 5px;
+}
+
+.module-content {
+  margin: 0px;
+  background-color: #EEEEEE;
+  padding: 40px 40px;
+  border-bottom: 1px solid #BEBEBE;
+}
+
+
+/* who uses it */
+.roles {
+  padding: 25px 0px 25px 0px;
+  text-align: center;
+  background-color: #EEEEEE;
+  color: #424242;
+}
+
+.roles h2, .roles-sample h2 {
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+.roles p {
+  letter-spacing: 0.05em;
+  line-height: 1.3em;
+  font-size: 21px;
+  font-weight: 200;
+  color: #858585;
+  margin: 10px;
+}
+
+
+div.frame-round {
+  padding: 20px 50px;
+  border-radius: 3px;
+  display: inline-block;
+  width: 200px;
+}
+
+div.frame-round-white-bg {
+  background-color: #ffffff;
+}
+
+div.roles-container {
+  display: inline-block;
+  margin: 3px;
+  /* Removes default space between inline blocks
+   * check http://css-tricks.com/fighting-the-space-between-inline-block-elements/
+   */
+  font-size: 0;
+}
+
+div.roles-container div {
+  font-size: 21px;
+}
+
+div.roles-sample {
+  text-align: left;
+  vertical-align: top;
+  padding-top: 60px;
+  padding-bottom: 59px;
+}
+
+div.roles-sample p {
+  margin: 10px 0px;
+}
+
+div.roles-sample a {
+  color: inherit;
+}
+
+div.roles-sample-green-bg {
+  background: url(/green_img_bg.png) no-repeat center center;
+}
+
+div.roles-sample-yellow-bg {
+  background: url(/yellow_img_bg.png) no-repeat center center;
+}
+
+div.roles-sample-blue-bg {
+  background: url(/blue_img_bg.png) no-repeat center center;
+}
+
+div.roles-sample-orange-bg {
+  background: url(/orange_img_bg.png) no-repeat center center;
+}
+
+div.roles-sample p {
+  color: #FFFFFF;
+}
+
+a.button {
+  color: #ffffff;
+  padding: 10px 30px 10px 30px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.5);
+  letter-spacing: 0.05em;
+  display: inline-block;
+  margin: 20px 0px 20px 0px;
+  font-size: 21px;
+}
+
+a.button:hover {
+  text-decoration: none;
+}
+
+.button-green {
+  background-color: #00CC79;
+}
+
+.button-yellow {
+  background-color: #ECBC2B;
+}
+
+.button-blue {
+  background-color: #24AEED;
+}
+
+.button-orange {
+  background-color: #F06226;
+}
+
+a.button-bordered:hover {
+  text-decoration: none;
+}
+
+a.button-bordered {
+  padding: 10px 30px 10px 30px;
+  border: 3px solid #A2A2A2;
+  border-radius: 3px;
+  color: #686868;
+  font-size: 1.3em;
+  display: inline-block;
+  margin: 10px;
+}
+
+.collaborators {
+  background-color: #FFFFFF;
+  padding: 25px 10px 25px 10px;
+  color: #858585;
+  text-align: center;
+}
+
+.collaborators h2 {
+  font-weight: 400;
+  text-align: center;
+}
+
+.collaborators div {
+  display: inline-block;
+  margin: 10px;
+}
+
+.collaborators div img {
+  margin: 30px 10px 30px 10px;
+  height: 70px;
+}
+
+/* Footer */
+
+.site-footer {
+  background: #EEEEEE;
+  color: #2C2C2C;
+  font-weight: 200;
+  font-size: 1.1em;
+  padding: 50px;
+}
+
+.site-footer a {
+  color: #2C2C2C;
+}
+
+.site-footer h5 {
+  font-weight: 200;
+  color: #565656;
+}
+
+.site-footer .logo {
+  text-align: right;
+  vertical-align: top;
+}
+
+.site-footer label {
+  color: #2C2C2C;
+  font-weight: 200;
+  font-size: 1.1em;
+}
+.footer-links {
+  width: auto;
+}
+
+.footer-links ul {
+    float: left;
+    margin-left: 20px;
+    width: 220px;
+}
+
+.footer-links .logo, .footer-links .all-links {
+  display: inline-block;
+  margin: 0px 30px 0px 30px;
+}
+
+
+/* Subscription*/
+
+.subscription {
+text-align: center;
+margin: 60px 10px;
+}
+
+#msg {
+  font-family: inherit;
+  font-size: 1.53em;
+  letter-spacing: 0.05em;
+  margin: 10px 0px;
+  line-height: initial;
+  font-weight: normal;
+}
+
+#msg:after {
+  content: "";
+}
+.message {
+  margin: 20px 0px;
+}
+.subscription .mail, .subscription .send {
+  display: inline-block;
+}
+.subscription .form-inline {
+  margin: 0px;
+  display: inline-block;
+}
+
+input.button {
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.5);
+  letter-spacing: 0.05em;
+  display: inline-block;
+  margin: 0px;
+  font-size: 18px;
+  border-color: transparent;
+  font-family: inherit;
+}
+
+#email {
+  font-size: 16px;
+  margin: 10px 5px;
+  padding: 10px;
+  width: 18em;
+  font-family: inherit;
+}
+
+/* Organization */
+
+.organization-page {
+  background-color: #EEEEEE;
+  padding: 20px 40px;
+  border-bottom: 1px solid #BEBEBE;
+}
+
+.image-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.organization-heading {
+  color: #FFFFFF;
+  font-size: 50px;
+}
+
+.organization-description {
+  color: #FFFFFF;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+.organization {
+  text-align: center;
+}
+
+.organization div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.organization .stats {
+  text-align: left;
+  display: block;
+  margin-top: 20px;
+}
+
+.organization .stats div {
+  text-align: center;
+  color: #506897;
+  font-size: 24px;
+  font-weight: 300;
+  border: 4px solid #506897;
+  border-radius: 5px;
+  padding: 20px 30px;
+  min-width: 130px;
+}
+
+.organization .stats div h1 {
+  color: #FFFFFF;
+  font-size: 50px;
+  font-weight: 400;
+  margin: -10px;
+  text-align: center;
+}
+
+.organization-info h1 {
+  text-align: left;
+}
+
+.organization-info p {
+  text-align: left;
+  width: 600px;
+}
+
+.organization-info a {
+  display: block;
+  color: #62E7DE;
+}
+
+.package-list {
+  background: #EEEEEE;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dataset-list .dataset-item {
+  vertical-align: top;
+  background: #FFFFFF;
+  padding: 10px 15px 10px 15px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  min-height:100px;
+  height:auto;
+}
+.dataset-item  {
+  margin-bottom: 0px !important;
+}
+
+/**.dataset-item .dataset-content div {
+  overflow: hidden;
+  font-weight: 200;
+  font-size: 15px;
+  color: #5B5B5B;
+  position: relative;
+  height: 4.0em;
+}**/
+
+.dataset-item .dataset-content div:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 1.3em;
+  /**background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);**/
+}
+
+.dataset-item .dataset-content p {
+    overflow: hidden;
+    font-weight: 200;
+    font-size: 15px;
+    color: #5B5B5B;
+    position: relative;
+    height: 4.0em;
+}
+
+.dataset-item .dataset-content p:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 1.3em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+.dataset-item .dataset-content .dataset-heading {
+  font-size: 18px;
+}
+
+.dataset-item .dataset-content .dataset-heading:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 1.3em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+.dataset-item .dataset-resources {
+  position: absolute;
+  bottom: 10px;
+}
+
+.dataset-item .dataset-resources .label {
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 200;
+  margin-top: 3px;
+  border-radius: 0px;
+}
+
+.dataset-item .dataset-date {
+  font-weight: 400;
+  font-size: 12px;
+  color: #888888;
+  letter-spacing: 0.01em;
+}
+
+.dataset-item .dataset-organization {
+  font-weight: 400;
+  font-size: 12px;
+  color: #333333;
+  margin-top: 10px;
+}
+
+div.organization-actions {
+  padding-right: 110px;
+  line-height: 0px;
+}
+
+div.organization-actions div{
+  display: inline-block;
+}
+
+.filter-datasets {
+  margin: 20px;
+}
+
+.filter-datasets ul li a {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.filter-datasets ul li a:hover {
+  text-decoration: none;
+}
+
+.filter-datasets .label {
+  padding: 8px 12px;
+  background-color: #00469E;
+  margin-top: 8px;
+  border-radius: 0px;
+}
+
+div.sort-datasets {
+  color: #555555;
+  font-size: 20px;
+  font-weight: 100;
+  margin: 15px 0px;
+}
+
+div.sort-datasets a.active {
+  font-weight: bold;
+}
+
+div.sort-datasets a {
+  color: #555555;
+}
+
+.apps-list {
+  text-align: center;
+  color: #5B5B5B;
+  padding: 50px;
+}
+
+.apps-list h3 {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.apps-list > p {
+  margin-bottom: 50px;
+}
+
+.apps-list p {
+  color: #959595;
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.frame-app {
+  width: 230px;
+}
+
+.frame-app h2 {
+  color: #292929;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.frame-app .technologies {
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.dataset-primary {width:100%;}
+.primary{width:80.8%;float:right;border-left: 1px solid #dddddd;}
+
+[role=main] .dataset-primary  {
+  float:none;
+  margin-left:none;
+}
+
+[role=main], .main {
+  background-color: #1e2d4a;
+}
+
+.secondary {
+    margin-left: 20px;
+    width: 19%;
+    margin-left: 0;
+    float: left;
+}
+
+@media (min-width: 1200px){
+  .container, .navbar-static-top .container, .navbar-fixed-bottom .container {
+    /**width: 940px; **/
+  }
+}
+
+@media (max-width: 979px) {
+  .nav-collapse .nav>li>a:hover, .nav-collapse .nav>li>a:focus,
+  .nav-collapse .dropdown-menu a:hover, .nav-collapse .dropdown-menu a:focus {
+    background-color: #151f31;
+  }
+  .nav-collapse .nav>li>a,
+  .nav-collapse .dropdown-menu a {
+    color: #ffffff;
+    text-shadow: none;
+    font-weight: 200;
+  }
+
+  .navbar-inner{
+    background: #151f31;
+  }
+
+  .nav-collapse .dropdown-menu a {
+    margin-left: 40px;
+  }
+
+  .homepage .search-form .search-input.search-giant input {
+    width: 400px;
+    font-size: 16px;
+  }
+
+  .site-footer {
+    padding: 20px;
+  }
+
+  .dataset-list .dataset-item {
+    width: 200px;
+    height: 100px;
+  }
+
+  .dataset-content {
+    height:auto;
+  }
+
+  .dataset-item .dataset-content div {
+    display: none;
+  }
+
+  .dataset-item .dataset-content .dataset-heading {
+    font-size: 16px;
+    height: 2.3em;
+  }
+
+  .dataset-item .dataset-resources .label {
+    padding: 3px 15px;
+    font-size: 12px;
+  }
+
+  .organization-info h1 {
+    text-align: center;
+  }
+
+  .organization-info p {
+    text-align: center;
+  }
+
+  .organization .stats {
+    text-align: center;
+  }
+
+  .organization .stats div {
+    padding: 10px 15px;
+    border-width: 3px;
+    font-size: 20px;
+  }
+
+  .organization .stats div h1 {
+    font-size: 28px;
+    margin: -5px;
+  }
+
+  div.organization-actions {
+    line-height: inherit;
+  }
+
+  div.organization-actions div {
+    float: left;
+    clear: both;
+  }
+
+  .heading {
+    font-size: 30px;
+  }
+
+  .description {
+    font-size: 20px;
+  }
+}
+
+  .media-item {
+        position: relative;!important;
+        width: 179px;!important;
+        overflow-wrap: break-word;
+  }
+@media (max-width: 767px) {
+  body {
+    padding: 0;
+  }
+
+  .homepage .search-form .search-input.search-giant input {
+    width: 300px;
+  }
+
+  .site-footer {
+    padding: 5px;
+  }
+
+  .footer-links .logo,
+  .footer-links .all-links {
+    margin: 0px;
+  }
+
+  .organization-info p {
+    width: auto;
+  }
+
+  .image-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+  }
+
+  div.sort-datasets {
+    font-size: 16px;
+    font-weight: 200;
+  }
+
+  div.sort-datasets span, div.sort-datasets a {
+    display: block;
+    float: left;
+  }
+
+  .heading {
+    font-size: 25px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+
+  .search-form .search-input.search-giant input {
+    font-size: 14px;
+  }
+
+  .search-form .search-input.search-giant button i {
+    font-size: 22px;
+    width: 22px;
+  }
+
+  #email {
+    width: 16em;
+  }
+}
+.btn, label {
+    font-weight: normal;
+    border-radius: 0px;
+}
+.btn-primary{
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #283858;
+    background-image:none;
+    border-radius: 0px !important;
+    font-weight: normal;
+}
+.btn-primary:hover {
+    background-color:#187794;
+}
+.label {
+  text-shadow:none;
+}
+
+.toolbar .breadcrumb {
+  font-size:13px;
+  margin-top: 10px;
+}
+
+.breadcrumb .home .icon-home {
+    font-size: 18px;
+}
+
+.toolbar .breadcrumb a {
+  color: #fff;
+  text-shadow: none;
+  font-weight:normal !important;
+}
+
+.search-form h2 {
+  font-size:14px;
+}
+
+.media-grid {
+  margin: 0 2px;
+}

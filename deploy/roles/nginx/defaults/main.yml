@@ -1,0 +1,7 @@
+---
+# file: defaults/main.yml
+
+# nginx branch to use
+nginx_branch: stable
+
+# vim: set sw=2 ts=2:

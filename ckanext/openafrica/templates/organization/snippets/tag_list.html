@@ -1,0 +1,14 @@
+{#
+render a list of tags linking to the dataset search page
+tags: list of tags
+#}
+{% set _class = _class or 'tag-list' %}
+{% set _tag_class=_tag_class or 'tag' %}
+{% set _organization_url=_organization_url or 'packages' %}
+<ul class="{{ _class }}">
+  {% for tag in tags %}
+    <li>
+      <a class="{{ _tag_class }}" href="{{ _organization_url }}?tags={{tag.name}}">{{ h.truncate(tag.display_name, 22) }}</a>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,62 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  {% snippet 'home/snippets/search.html'  %}
+  <p class="joined-orgs-msg"><b><a href="/organization">{{ h.get_site_statistics()["organization_count"] }}</a></b> organisations or civil society groups<br />currently sharing data</p>
+  <div class="roles">
+    <h2>Who uses openAFRICA?</h2>
+    <p>Find out who and how several actors are using open data to
+<br /> address some of Africa's challenges</p>
+    <div class="roles-container">
+      <div class="frame-round frame-round-white-bg">
+        <h2>Creators</h2>
+        <p>APIs Visualisations Open Source Open Data</p>
+        <a class="button button-green" href="http://docs.ckan.org/en/latest/api/">API Docs</a>
+      </div>
+      <div class="roles-sample roles-sample-green-bg frame-round">
+        <h2>Civic Apps</h2>
+        <p><a href="http://www.codeforafrica.org/" target="_blank">Apps such as GotToVote, StarHealth,Grano  and sourceAFRICA</a></p>
+      </div>
+    </div>
+    <div class="roles-container">
+      <div class="frame-round frame-round-white-bg">
+        <h2>Governments</h2>
+        <p>Publish<br />Measure<br />Share<br />Data<br /></p>
+        <a class="button button-blue" href="/dataset/new">Publish</a>
+      </div>
+      <div class="roles-sample roles-sample-blue-bg frame-round">
+        <h2>Transparency</h2>
+        <p><a href="http://gottovote.co.ke/" target="_blank">Open data and platforms for fostering civic innovation</a></p>
+      </div>
+    </div>
+    <div class="roles-container">
+      <div class="roles-sample roles-sample-yellow-bg frame-round">
+        <h2>Budgets</h2>
+        <p><a href="http://granoproject.org/" target="_blank">Collecting and liberating budget data from different countries</a></p>
+      </div>
+      <div class="frame-round frame-round-white-bg">
+        <h2>Journalists</h2>
+        <p>Visualise<br />Analyse<br />Discover<br />Open Data</p>
+        <a class="button button-yellow" href="/dataset">Explore</a>
+      </div>
+    </div>
+    <div class="roles-container">
+      <div class="roles-sample roles-sample-orange-bg frame-round">
+        <h2>Visualisations</h2>
+        <p><a href="http://wmmd.codeforafrica.org/" target="_blank">Visualising royalties contributed by mining companies in Ghana</a></p>
+      </div>
+      <div class="frame-round frame-round-white-bg">
+        <h2>Society</h2>
+        <p>Decide<br />Discover<br />Act<br />Open Data</p>
+        <a class="button button-orange" href="/dataset">Visualise</a>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  {% snippet "home/snippets/subscription.html" %}
+  <div class="collaborators">
+      <div class="partner-logos">
+          {% snippet 'home/snippets/home_partner_logos.html' %}
+      </div>
+  </div>
+{% endblock %}

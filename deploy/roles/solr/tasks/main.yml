@@ -1,0 +1,25 @@
+---
+# file: tasks/main.yml
+
+- name: Install Solr deps
+  apt: name={{ item }} state=present install_recommends=no update_cache=yes cache_valid_time=3600
+  with_items:
+    - unzip
+    - tar
+
+- name: Add Oracle Java PPA
+  apt_repository: repo='ppa:webupd8team/java' state=present
+  tags: java
+
+- name: Accept Oracle license
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+  tags: java
+
+- name: Install Oracle Java 8
+  apt: name=oracle-java8-installer state=present update_cache=yes
+  tags: java
+
+- include: solr.yml
+  tags: solr
+
+# vim: set sw=2 ts=2:

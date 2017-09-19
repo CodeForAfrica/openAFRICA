@@ -1,0 +1,12 @@
+---
+
+# Git settings.
+setup_git_repo: yes
+git_branch: develop
+
+
+# Database settings.
+db_user: "{{ application_name }}"
+db_name: "{{ application_name }}"
+db_password: "{{ application_name }}"
+

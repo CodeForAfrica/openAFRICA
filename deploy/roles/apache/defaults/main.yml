@@ -1,0 +1,9 @@
+---
+# file: defaults/main.yml
+
+# since we'll have nginx on the front(80),
+# we need to set apache2 to listen to another port(8080)
+apache2_http_port: 8080
+apache2_https_port: 8443
+
+# vim: set sw=2 ts=2:

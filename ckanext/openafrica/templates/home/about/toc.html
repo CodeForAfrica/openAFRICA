@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Terms & Conditions') }}{% endblock %}
+
+{% block breadcrumb_content %}
+	<li >{% link_for _('About'), controller='home', action='about' %}</li>
+	<li class="active">{% link_for _('Terms & Conditions'), controller='ckanext.openafrica.controller:CustomPageController', action='toc' %}</li>
+{% endblock %}
+
+{% block primary %}
+	<article class="module">
+		<div class="module-content">
+			{% block toc %}
+				<h1 class="page-heading">{{ _('Terms & Conditions') }}</h1>
+				{% snippet 'home/snippets/toc_text.html' %}
+			{% endblock %}
+		</div>
+	</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

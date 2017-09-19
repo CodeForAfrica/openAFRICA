@@ -1,0 +1,78 @@
+---
+# file: defaults/main.yml
+
+# ckan user details
+ckan_user: {
+  name: "ckan",
+  system: "yes",
+  home_path: "/usr/lib/ckan",
+  shell: "/sbin/nologin",
+  description: "CKAN User"
+}
+
+celery_user: ubuntu
+log_path: "/var/log/ckan/africaopendata"
+# latest stable ckan version
+ckan_version: "2.3"
+
+# Link/URL to download ckan sources
+ckan_src_url: "git+https://github.com/okfn/ckan.git@ckan-{{ ckan_version }}#egg=ckan"
+
+# CKAN default site name
+ckan_site_name: "africaopendata"
+
+# CKAN site_id
+ckan.site_id: africaopendata
+
+# CKAN site URL
+ckan_site_url: "http://{{ ckan_site_name }}"
+
+# CKAN site title
+ckan_site_title: "CKAN"
+
+# CKAN site description
+ckan_site_description: "The easy way to get, use and share data"
+
+# CKAN email settings
+ckan_email_to: "ckan@yourdomain.com"
+ckan_error_email_from: "no-reply@yourdomain.com"
+ckan_smtp_server: "smtp.yourdomain.com"
+ckan_smtp_starttls: False
+ckan_smtp_user: "ckan-mailer"
+ckan_smtp_password: 'T$UZqA\XeN$}CX8)'
+ckan_smtp_mail_from: "no-reply@yourdomain.com"
+
+# disable ckan debugging on production servers unless when
+# in dev. mode
+ckan_debug_mode: "false"
+
+#default ckan virtualenv path
+ckan_virtualenv: "{{ ckan_user.home_path }}/{{ ckan_site_name }}"
+
+# postgresql database & user used by ckan
+ckan_db: {
+  username: "ckan_default",
+  password: "h8ds*hzYRE",
+  dbname: "ckan_default",
+  dbhost: "{{ pg_db_server }}"
+}
+
+# CKAN default site's configs directory
+ckan_conf_dir: "/etc/ckan/{{ ckan_site_name }}"
+
+# directory in which CKAN will store all uploaded data
+ckan_storage_path: "/var/lib/ckan/{{ckan_site_name}}"
+
+# CKAN Maximum resource upload size in MB
+ckan_max_resource_size: 10
+
+# maximum  image upload size in MB
+ckan_max_image_size: 2
+
+# CKAN solr URL
+ckan_solr_url: "http://127.0.0.1:8983/solr/ckan_default"
+
+supervisor_services:
+  - ckan_gather_consumer
+  - ckan_fetch_consumer
+# vim: set sw=2 ts=2:
