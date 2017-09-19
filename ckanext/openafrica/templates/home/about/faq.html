@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('FAQs') }}{% endblock %}
+
+{% block breadcrumb_content %}
+	<li >{% link_for _('About'), controller='home', action='about' %}</li>
+	<li class="active">{% link_for _('FAQs'), controller='ckanext.openafrica.controller:CustomPageController', action='faq' %}</li>
+{% endblock %}
+
+{% block primary %}
+	<article class="module">
+		<div class="module-content">
+			{% block faq %}
+				<h1 class="page-heading">{{ _('FAQs') }}</h1>
+				{% snippet 'home/snippets/faq_text.html' %}
+			{% endblock %}
+		</div>
+	</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

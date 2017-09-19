@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Contact Us') }}{% endblock %}
+
+{% block breadcrumb_content %}
+	<li >{% link_for _('About'), controller='home', action='about' %}</li>
+	<li class="active">{% link_for _('Contact Us'), controller='ckanext.openafrica.controller:CustomPageController', action='contact' %}</li>
+{% endblock %}
+
+{% block primary %}
+	<article class="module">
+		<div class="module-content">
+			{% block contact %}
+				<h1 class="page-heading">{{ _('Contact Us') }}</h1>
+				<iframe src="https://docs.google.com/spreadsheet/embeddedform?formkey=dHB4ZUdTN0lNREllTGl4dXpMbHFzdmc6MA" width="760" height="867" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+			{% endblock %}
+		</div>
+	</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

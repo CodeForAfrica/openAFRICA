@@ -1,0 +1,5 @@
+{% if nginx_branch == "stable" %}
+deb http://nginx.org/packages/ubuntu/ {{ ansible_distribution_release }} nginx
+{% else %}
+deb http://nginx.org/packages/mainline/ubuntu/ {{ ansible_distribution_release }} nginx
+{% endif %}

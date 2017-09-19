@@ -1,0 +1,25 @@
+---
+# file: defaults/main.yml
+
+# Default values used to deploy postgresql
+
+# TLS cipher suite used by postgresql client-server connection
+pg_tls_cipher_suite: "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128:AES256:AES:CAMELLIA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA"
+
+# Postgresql version
+pg_version: 9.3
+
+# Postgresql configuration directory on Ubuntu hosts
+pg_conf_dir: "/etc/postgresql/{{ pg_version }}/main"
+
+# IP address/hostname on which postgresql will listen
+# for connections on
+pg_listen_addresses: "localhost"
+
+pg_db_server: "localhost"
+# host connection details allowed to connect to postgresql server
+# See http://www.postgresql.org/docs/9.1/static/auth-pg-hba-conf.html
+pg_db_connections:
+  - { type: "host", db: "all", user: "all", src_addr: "127.0.0.1/32", method: "md5" }
+
+# vim: set sw=2 ts=2:

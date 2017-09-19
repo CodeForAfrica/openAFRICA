@@ -1,0 +1,30 @@
+---
+# file: tasks/main.yml
+
+- name: Install apache2 & mod-wsgi
+  apt: name={{ item }} state=latest
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+    - libapache2-mod-rpaf
+  register: stop_apache
+
+- name: Temporarily stop apache2
+  service: name=apache2 state=stopped
+  when: stop_apache is defined and stop_apache|changed
+
+- name: Configure apache2 ports
+  template: src="ports.conf.j2" dest="/etc/apache2/ports.conf" owner=root group=root mode=0644
+  notify: reload apache2
+
+- name: Enable mod-wsgi & mod-rpaf apache2 modules
+  command: /usr/sbin/a2enmod {{ item.mod }} creates={{ item.link }}
+  with_items:
+    - { mod: "wsgi", link: "/etc/apache2/mods-enabled/wsgi.load" }
+    - { mod: "rpaf", link: "/etc/apache2/mods-enabled/rpaf.load" }
+  notify: reload apache2
+
+- name: Start & enable apache2 service
+  service: name=apache2 state=started enabled=yes
+
+# vim: set sw=2 ts=2:

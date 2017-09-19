@@ -1,0 +1,60 @@
+{% ckan_extends %}
+{% block header_wrapper %}
+
+  <div class="navbar">
+    <div class="navbar-inner navbar-fixed-top">
+      <div class="container">
+
+        <!-- Be sure to leave the brand out there if you want it shown -->
+        {% block header_logo %}
+          {% if g.site_logo %}
+            <a class="logo brand" href="{{ h.url('home') }}"><img src="{{ g.site_logo }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" /></a>
+          {% else %}
+            <a class="brand" href="{{ h.url('home') }}"><img src="https://cloud.githubusercontent.com/assets/877919/14067805/7e3ff5ae-f476-11e5-88eb-059d88816232.png" alt="{{ g.site_title }}" title="{{ g.site_title }}" /></a>
+          {% endif %}
+        {% endblock %}
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+
+        <!-- Everything you want hidden at 940px or less, place within here -->
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+              <li><a href="/dataset">Datasets</a></li>
+              <li><a href="/organization">Organisations</a></li>
+              <li><a href="/groups">Groups</a></li>
+              <li><a href="/about">About</a></li>
+          </ul>
+          <ul class="nav pull-right">
+            {% if c.userobj %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=30) }}
+                  <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}">Profile</a></li>
+                  {% if c.userobj.sysadmin %}
+                    <li><a href="{{ h.url_for(controller='admin', action='index') }}">Admin</a></li>
+                  {% endif %}
+                  <li>
+                    <a href="{{ h.url_for(controller='user', action='dashboard') }}">Control Panel</a>
+                  </li>
+                  <li><a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}">Options</a></li>
+                  <li><a href="{{ h.url_for('/user/_logout') }}">Logout</a></li>
+                </ul>
+              </li>
+            {% else %}
+                <li>{% link_for _('Log in'), controller='user', action='login' %}</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

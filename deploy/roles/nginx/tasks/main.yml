@@ -1,0 +1,25 @@
+---
+# file: tasks/main.yml
+
+- name: Add nginx.org apt signing key
+  apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
+
+- name: Add nginx.org repo
+  template: src=nginx_org_packages_ubuntu.list.j2 dest=/etc/apt/sources.list.d/nginx_org_packages_ubuntu.list mode=0644 owner=root group=root
+
+- name: Install nginx
+  apt: name=nginx update_cache=yes state=latest
+
+- name: Copy nginx configs
+  copy: src={{ item }} dest=/etc/nginx/{{ item }} mode=0644 owner=root group=root
+  with_items:
+    - extra-security.conf
+    - nginx.conf
+    - proxy_params
+  notify:
+    - reload nginx
+
+- name: Start & enable nginx service
+  service: name=nginx state=started enabled=yes
+
+# vim: set sw=2 ts=2:

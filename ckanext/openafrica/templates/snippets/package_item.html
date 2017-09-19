@@ -1,0 +1,99 @@
+{#
+Displays a single of dataset.
+
+package        - A package to display.
+item_class     - The class name to use on the list item.
+hide_resources - If true hides the resources (default: false).
+banner         - If true displays a popular banner (default: false).
+truncate       - The length to trucate the description to (default: 180)
+truncate_title - The length to truncate the title to (default: 80).
+
+Example:
+
+  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+
+#}
+{% set truncate = truncate or 180 %}
+{% set truncate_title = truncate_title or 80 %}
+{% set title = package.title or package.name %}
+{% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+{% set updated_time = package.metadata_modified or package.metadata_created%}
+{% set created_time = package.metadata_created%}
+{% set f_updated_time = h.render_datetime(updated_time) %}
+{% set f_created_time = h.render_datetime(created_time) %}
+
+{% block package_item %}
+  <li class="{{ item_class or "dataset-item" }}">
+    {% block content %}
+      <div class="dataset-content">
+        <div class="pull-left" style="width:40%;">
+          {% block heading %}
+            <h5 class="dataset-heading">
+              {% block heading_private %}
+                {% if package.private %}
+                  <span class="dataset-private label label-inverse">
+                    <i class="icon-lock"></i>
+                    {{ _('Private') }}
+                  </span>
+                {% endif %}
+              {% endblock %}
+              {% block heading_title %}
+                {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+                <small>{{package.total}}</small>
+                <div class="dataset-date">{{_('Updated')}} {{f_updated_time}} | {{_('Created')}}  {{f_created_time}}</div>
+                {% if package.organization %}
+                <div class="dataset-organization">
+                  <a class="org" href="{{ h.url_for(controller='organization', action='read', id=package.organization.name, sort='metadata_modified desc') }}">
+                    {{ package.organization.title or package.organization.name }}
+                  </a>
+                </div>
+                {% endif %}
+              {% endblock %}
+              {% block heading_meta %}
+                {% if package.get('state', '').startswith('draft') %}
+                  <span class="label label-info">{{ _('Draft') }}</span>
+                {% elif package.get('state', '').startswith('deleted') %}
+                  <span class="label label-important">{{ _('Deleted') }}</span>
+                {% endif %}
+                {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
+              {% endblock %}
+            </h5>
+          {% endblock %}
+          {% block banner %}
+            {% if banner %}
+              <span class="banner">{{ _('Popular') }}</span>
+            {% endif %}
+          {% endblock %}
+        </div>
+        <div class="pull-left " style="width:46%;padding-left:10px;">
+          <div class="dataset-notes">
+            {% block notes %}
+              {% if notes %}
+                <div>{{ notes|urlize }}</div>
+              {% else %}
+                <p class="empty">{{ _("This dataset has no description") }}</p>
+              {% endif %}
+            {% endblock %}
+          </div>
+          <div class="dataset-resource-list">
+            {% block resources %}
+              {% if package.resources and not hide_resources %}
+                {% block resources_outer %}
+                  <ul class="dataset-resources unstyled">
+                    {% block resources_inner %}
+                      {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                      <li>
+                        <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
+                      </li>
+                      {% endfor %}
+                    {% endblock %}
+                  </ul>
+                {% endblock %}
+              {% endif %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </li>
+{% endblock %}

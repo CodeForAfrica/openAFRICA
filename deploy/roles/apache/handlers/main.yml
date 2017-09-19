@@ -1,0 +1,10 @@
+---
+# file: handlers/main.yml
+
+- name: reload apache2
+  service: name=apache2 state=reloaded
+
+- name: stop apache2
+  service: name=apache2 state=stopped
+
+# vim: set sw=2 ts=2:

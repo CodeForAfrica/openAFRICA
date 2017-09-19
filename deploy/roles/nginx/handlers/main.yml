@@ -1,0 +1,7 @@
+---
+# file: handlers/main.yml
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+
+# vim: set sw=2 ts=2:

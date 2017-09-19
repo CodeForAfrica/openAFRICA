@@ -1,0 +1,193 @@
+---
+# file: tasks/main.yml
+
+- name: Install ckan dependencies
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - git-core
+    - libpq-dev
+    - python-dev
+    - python-pip
+    - python-virtualenv
+
+- name: Upgrade python-pip
+  command: pip install --upgrade pip
+
+- name: Create ckan system user account
+  when: ckan_user is defined
+  user: name={{ ckan_user.name }} system={{ ckan_user.system }} createhome=yes home={{ ckan_user.home_path }} shell={{ ckan_user.shell }} comment="{{ckan_user.description}}"
+
+- name: Install ckan
+  #become_user: "{{ ckan_user.name }}"
+  pip: name="{{ckan_src_url}}" virtualenv={{ ckan_virtualenv }} state=present
+
+- name:  Install ckan python modules
+  #become_user: "{{ ckan_user.name }}"
+  pip: requirements="{{ ckan_virtualenv }}/src/ckan/requirements.txt" virtualenv={{ ckan_virtualenv }} state=present
+
+- name: get openafrica
+  action: git repo=https://github.com/jmwenda/ckanext-openafrica dest={{ ckan_virtualenv }}/src/ckanext-openafrica version=develop
+
+- name: run setup.py develop for openafrica
+  action: command chdir={{ ckan_virtualenv }}/src/ckanext-openafrica/ ../../bin/python setup.py develop
+
+- name: get harvest
+  action: git repo=https://github.com/ckan/ckanext-harvest.git dest={{ ckan_virtualenv }}/src/ckanext-harvest version=release-datagov
+
+- name: run setup.py develop for the harvester
+  action: command chdir={{ ckan_virtualenv }}/src/ckanext-harvest/ ../../bin/python setup.py develop
+
+- name: install requirements for harvest
+  action: pip requirements={{ ckan_virtualenv }}/src/ckanext-harvest/pip-requirements.txt virtualenv={{ ckan_virtualenv}}
+
+- name: get showcase
+  action: git repo=https://github.com/ckan/ckanext-showcase dest={{ ckan_virtualenv }}/src/ckanext-showcase version=master
+
+- name: run setup.py develop for showcase
+  action: command chdir={{ ckan_virtualenv }}/src/ckanext-showcase/ ../../bin/python setup.py develop
+
+- name: Create ckan postgresql user
+  become_user: postgres
+  postgresql_user: name={{ ckan_db.username }} password={{ ckan_db.password }}
+  tags: db
+
+- name: Create ckan postgresql database
+  become_user: postgres
+  postgresql_db: name={{ ckan_db.dbname }} encoding='UTF-8' template='template0' owner={{ ckan_db.username }}
+  tags: db
+
+- name: Create ckan config dir.
+  file: path={{ ckan_conf_dir }} owner={{ ckan_user.name }} group={{ ckan_user.name }} mode=0755 state=directory
+
+# NOTE: Add production.ini template
+- name: Copy ckan production.ini config file
+  template: src="production-{{ ckan_version }}.ini.j2" dest="{{ ckan_conf_dir }}/production.ini" owner={{ ckan_user.name }} group={{ ckan_user.name }} mode=0644
+  notify: reload apache2
+
+- name: Create ckan data uploads dir.
+  file: path={{ ckan_storage_path }} owner=www-data group={{ ckan_user.name }} mode=0775 state=directory
+
+- name: Generate beaker secret token
+  command: "{{ ckan_virtualenv }}/bin/python -c 'from paste.script.util import secret; print secret.secret_string()'"
+  register: beaker_secret_token
+
+- name: Set beaker.session.secret in production.ini
+  lineinfile: regexp="^beaker\.session\.secret\ =$" line="beaker.session.secret = {{ beaker_secret_token.stdout }}" dest="{{ ckan_conf_dir }}/production.ini" backrefs=yes state=present
+  when: beaker_secret_token is defined
+
+- name: Generate ckan aplication instance UUID
+  command: "{{ ckan_virtualenv }}/bin/python -c 'from paste.script.util import uuid; print uuid.uuid4()'"
+  register: app_instance_uuid
+
+- name: Set app_instance_uuid in production.ini
+  lineinfile: regexp="^app_instance_uuid =$" line="app_instance_uuid = {{ app_instance_uuid.stdout }}" dest="{{ ckan_conf_dir }}/production.ini" backrefs=yes state=present
+  when: app_instance_uuid is defined
+
+- name: Symlink who.ini to ckan config. dir
+  file: src="{{ ckan_virtualenv }}/src/ckan/who.ini" dest="{{ ckan_conf_dir }}/who.ini" owner={{ ckan_user.name }} group={{ ckan_user.name }} state=link
+
+## TODO: copy solr schema.xml. what about multi-core/multi-ckan instances ??
+- name: Configure solr core used by ckan
+#  command: /bin/cp -a {{ ckan_virtualenv }}/src/ckan/ckan/config/solr/schema.xml {{ solr_var_dir }}/data/{{ item }}/conf/schema.xml creates={{ solr_var_dir }}/data/{{ item }}/conf/schema.xml
+  command: /bin/cp -a {{ ckan_virtualenv }}/src/ckan/ckan/config/solr/schema.xml {{ solr_var_dir }}/data/{{ item }}/conf/schema.xml
+  notify: reload solr
+  with_items: "{{ solr_cores }}"
+  tags: solr
+
+- name: Copy the schema to managed schema
+  command: /bin/cp -a {{ solr_var_dir }}/data/{{ item }}/conf/schema.xml {{ solr_var_dir }}/data/{{ item }}/conf/managed-schema
+  with_items: "{{ solr_cores }}"
+  tags: solr
+
+- name: Copy the solrschema to the conf
+  template: src="solrconfig.xml" dest="{{ solr_var_dir }}/data/{{ item }}/conf/" owner={{ solr_user.name }} group={{ solr_user.name }} mode=0644
+  notify: restart solr
+  with_items: "{{ solr_cores }}"
+  tags: solr
+
+- name: Restart solr because of its ideosyncrancies
+  sudo: yes
+  service: name=solr state=restarted
+  register: restart
+
+## TODO: find a way of running paster & make it idempotent - maybe touch a file ??
+- name: Initialize ckan postgresql database
+  become_user: "{{ckan_user.name}}"
+  command: "{{ ckan_virtualenv }}/bin/paster --plugin=ckan db init -c {{ ckan_conf_dir }}/production.ini"
+#  command: "{{ ckan_virtualenv }}/bin/paster db init -c {{ ckan_conf_dir }}/production.ini"
+#  args:
+#    chdir: "{{ ckan_virtualenv }}/src/ckan"
+
+- name: Rebuild search index
+  command: "{{ckan_virtualenv}}/bin/paster --plugin=ckan search-index rebuild -c {{ ckan_conf_dir}}/production.ini"
+
+- name: Create apache2 default vhost for ckan
+  template: src="apache/000-ckan-default.conf.j2" dest="/etc/apache2/sites-available/000-default.conf" owner=root group=root mode=0644
+  notify: reload apache2
+  tags:
+    - ckan
+    - apache
+
+- name: Enable apache2 default vhost for ckan
+  file: src="/etc/apache2/sites-available/000-default.conf" dest="/etc/apache2/sites-enabled/000-default.conf" state=link owner=root group=root mode=0644
+  notify: reload apache2
+  tags:
+    - ckan
+    - apache
+
+- name: Create apache2 WSGI file
+  template: src="apache/ckan-apache.wsgi.j2" dest="{{ ckan_conf_dir }}/apache.wsgi" owner={{ ckan_user.name }} group={{ ckan_user.name }} mode=0644
+  notify: reload apache2
+  tags:
+    - ckan
+    - apache
+
+- name: Create nginx default vhost for ckan
+  template: src="nginx/default-vhost.conf.j2" dest="/etc/nginx/conf.d/default.conf" owner=root group=root mode=0644
+  notify: reload nginx
+  tags:
+    - ckan
+    - nginx
+
+- name: Copy supervisor configuration
+  template: src="supervisor.conf.j2" dest="/etc/supervisor/conf.d/africaopendata.conf" mode="0644" owner=root group=root
+  register: supervisor_configuration
+  notify:
+  - Restart Gather
+  - Restart Fetch
+  tags:
+  - ckan
+
+- name: Create log directory
+  file: path={{ log_path }} state=directory
+
+- name: Reread supervisor
+  shell: supervisorctl reread
+  when: supervisor_configuration|changed
+  tags:
+  - ckan
+
+- name: Ensure supervisor services
+  shell: supervisorctl add {{ item }}
+  when: supervisor_configuration|changed
+  with_flattened:
+    - supervisor_services
+  tags:
+  - ckan
+
+- name: Ensure supervisor services are restarted
+  supervisorctl: name={{ item }} state=restarted
+  #when: supervisor_configuration|changed or modules_install|changed or ckan_configuration|changed
+  with_flattened:
+    - supervisor_services
+  tags:
+  - ckan
+
+- name: Ensure supervisor services are started
+  supervisorctl: name={{ item }} state=started
+  with_flattened:
+    - supervisor_services
+  tags:
+  - ckan
+
+# vim: set sw=2 ts=2:

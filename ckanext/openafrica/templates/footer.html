@@ -1,0 +1,41 @@
+{% ckan_extends %}
+{% block footer_content %}
+  <div class="footer-links">
+    <div class="logo">
+      <a href="http://www.codeforafrica.org">
+        <img src="/images/logos/c4a.png" />
+      </a>
+      <h5>2013 - {{h.current_year()}} Code for Africa</h5>
+    </div>
+    <div class="all-links">
+      <ul class="unstyled">
+              <li><a href="{{ h.url_for(controller='home', action='about') }}">{{ _('About {0}').format(g.site_title) }}</a></li>
+              <li><a href="/about/terms-and-conditions">{{ _('Terms and Conditions') }}</a></li>
+              <li><a href="/about/accessibility">{{ _('Accessibility') }}</a></li>
+              <li><a href="/about/code-of-conduct">{{ _('Code of conduct') }}</a></li>
+              <li><a href="/about/moderation-policy">{{ _('Moderation policy') }}</a></li>
+              <li><a href="/about/faq">{{ _('FAQ') }}</a></li>
+              <li><a href="/about/privacy">{{ _('Privacy') }}</a></li>
+              <li><a href="/about/contact-us">{{ _('Contact us') }}</a></li>
+        {% set api_url = 'http://docs.ckan.org/en/{0}/api/'.format(g.ckan_doc_version) %}
+        <li><a href="{{ api_url }}">{{ _('CKAN API') }}</a></li>
+      </ul>
+
+      <ul class="unstyled">
+        <li>{% snippet "snippets/language_selector.html" %}</li>
+        <li><a href="http://ckan.org">Powered by CKAN</a></li>
+      </ul>
+    </div>
+  </div>
+
+{%block google_analytics %}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-44795600-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+  {% endblock %}
+{% endblock %}

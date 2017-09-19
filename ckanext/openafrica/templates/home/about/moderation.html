@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Moderation Policy') }}{% endblock %}
+
+{% block breadcrumb_content %}
+	<li >{% link_for _('About'), controller='home', action='about' %}</li>
+	<li class="active">{% link_for _('Moderation Policy'), controller='ckanext.openafrica.controller:CustomPageController', action='moderation' %}</li>
+{% endblock %}
+
+{% block primary %}
+	<article class="module">
+		<div class="module-content">
+			{% block moderation %}
+				<h1 class="page-heading">{{ _('Moderation Policy') }}</h1>
+				{% snippet 'home/snippets/moderation_text.html' %}
+			{% endblock %}
+		</div>
+	</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

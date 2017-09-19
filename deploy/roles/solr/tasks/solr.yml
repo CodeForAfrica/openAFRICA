@@ -1,0 +1,46 @@
+---
+
+- name: Create system user account to run solr daemon
+  user: name={{ solr_user.name }} createhome=yes home={{ solr_user.home_path }} shell=/bin/bash system=yes state=present
+
+- name: Get Solr tarball
+  get_url: url={{ solr_mirror_url }} dest={{ solr_prefix_dir }}/{{ solr_tarball }} sha256sum={{ solr_sha256sum }}
+  register: get_url_result
+
+- name: Unpack Solr tarball
+  unarchive: src={{ solr_prefix_dir }}/{{ solr_tarball }} dest={{ solr_prefix_dir }} creates={{ solr_prefix_dir }}/solr-{{ solr_version }} owner={{ solr_user.name }} group={{ solr_user.name }} copy=no
+  when: get_url_result|changed
+
+# /opt/solr -> /opt/solr-$SOLR_VERSION
+- name: Create a symlink to solr installation dir
+  file: src="{{solr_prefix_dir}}/solr-{{solr_version}}" dest="{{solr_prefix_dir}}/solr" owner={{ solr_user.name }} group={{ solr_user.name }} state=link
+
+- name: Create solr data & log dirs
+  file: path={{ item }} owner={{ solr_user.name }} group={{ solr_user.name }} state=directory
+  with_items:
+    - "{{solr_var_dir}}/data"
+    - "{{solr_var_dir}}/logs"
+
+- name: Copy solr init.d service file
+  template: src=init.d-solr.j2 dest=/etc/init.d/solr owner=root group=root mode=0755
+
+- name: Copy solr.xml config. files
+  command: /usr/bin/rsync -a "{{solr_install_dir}}/server/solr/solr.xml" "{{solr_var_dir}}/data/" creates="{{solr_var_dir}}/data/solr.xml"
+
+- name: Copy solr env files
+  template: src=solr.in.sh.j2 dest={{ solr_var_dir }}/solr.in.sh owner={{ solr_user.name }} group={{ solr_user.name }} mode=0755
+  notify: restart solr
+
+- name: Reconfigure solr logging
+  copy: src=log4j.properties dest="{{ solr_var_dir }}/log4j.properties" owner={{ solr_user.name }} group={{ solr_user.name }} mode=0644
+  notify: restart solr
+
+- name: Start & enable service
+  service: name=solr state=started enabled=yes
+
+- include: solr-cores.yml
+  become_user: "{{ solr_user.name }}"
+  when: solr_cores is defined
+  tags: solr-cores
+
+# vim: set ts=2 sw=2:

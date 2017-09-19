@@ -1,0 +1,7 @@
+---
+# file: handlers/main.yml
+
+- name: restart postgres
+  service: name=postgresql state=reloaded
+
+# vim: set sw=2 ts=2:

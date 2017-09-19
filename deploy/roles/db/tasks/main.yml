@@ -1,0 +1,30 @@
+---
+# file: tasks/main.yml
+
+- name: Add PGDG apt list file
+  template: src=pgdg.list.j2 dest=/etc/apt/sources.list.d/pgdg.list owner=root group=root mode=0644
+
+- name: Import PGDG repo keys
+  apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc" state=present
+
+- name: Install postgresql
+  apt: name={{ item }} update_cache=yes state=present
+  with_items:
+    - python-psycopg2
+    - postgresql-{{ pg_version }}
+    - postgresql-client-{{ pg_version }}
+    - postgresql-contrib-{{ pg_version }}
+  notify:
+    - restart postgres
+
+- name: Copy postgres configs
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.group }}
+  with_items:
+    - { src: 'postgresql-{{ pg_version }}.conf.j2', dest: '{{ pg_conf_dir }}/postgresql.conf', mode: '0644', owner: 'postgres', group: 'postgres' }
+    - { src: 'pg_hba-{{ pg_version }}.conf.j2', dest: '{{ pg_conf_dir }}/pg_hba.conf', mode: '0640', owner: 'postgres', group: 'postgres' }
+  notify: restart postgres
+
+- name: start & enable postgres
+  service: name=postgresql state=started enabled=true
+
+# vim: set sw=2 ts=2:

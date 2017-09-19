@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Accessibility') }}{% endblock %}
+
+{% block breadcrumb_content %}
+	<li >{% link_for _('About'), controller='home', action='about' %}</li>
+	<li class="active">{% link_for _('Accessibility'), controller='ckanext.openafrica.controller:CustomPageController', action='accessibility' %}</li>
+{% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      {% block accessibility %}
+				<h1 class="page-heading">{{ _('Accessibility') }}</h1>
+				{% snippet 'home/snippets/accessibility_text.html' %}
+			{% endblock %}
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

@@ -1,0 +1,26 @@
+---
+- name: We first delete the core if it exists
+  become_user: solr
+  command: "{{ solr_install_dir }}/bin/solr delete -c ckan_default"
+
+- name: Experiment in creating a core
+  become_user: solr
+  command: "{{ solr_install_dir }}/bin/solr create -c ckan_default"
+ 
+- name: Create Solr core data dir
+  file: dest={{ solr_var_dir }}/data/{{ item }}/data/index state=directory mode=0755
+  with_items: "{{ solr_cores }}"
+
+- name: Create Solr core conf dir
+  file: dest={{ solr_var_dir }}/data/{{ item }}/conf state=directory owner={{ solr_user.name }} group={{ solr_user.name }} mode=0755
+  with_items: "{{ solr_cores }}"
+
+- name: Populate Solr core conf dir
+  command: /usr/bin/rsync -a {{ solr_install_dir }}/server/solr/configsets/basic_configs/conf/ {{ solr_var_dir }}/data/{{ item }}/conf/ creates={{ solr_var_dir }}/data/{{ item }}/conf/solrconfig.xml
+  with_items: "{{ solr_cores }}"
+
+- name: Create core.properties placeholder
+  file: dest={{ solr_var_dir }}/data/{{ item }}/core.properties state=touch owner={{ solr_user.name }} group={{ solr_user.name }} mode=0644
+  with_items: "{{ solr_cores }}"
+
+# vim: set ts=2 sw=2:
