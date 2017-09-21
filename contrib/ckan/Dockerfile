@@ -18,10 +18,10 @@ RUN apt-get -q -y update && apt-get -q -y upgrade && DEBIAN_FRONTEND=noninteract
         python-virtualenv \
         libpq-dev \
         git-core \
-    && apt-get -q clean
+        && apt-get -q clean
 
-# Download CKAN		
- RUN git clone https://github.com/ckan/ckan.git /ckan		
+# Download CKAN
+RUN git clone https://github.com/ckan/ckan.git /ckan
 WORKDIR /ckan
 
 # SetUp Virtual Environment CKAN
@@ -38,8 +38,8 @@ RUN ckan-pip install --upgrade -r $CKAN_HOME/src/ckan/requirements.txt
 ADD ./dev-requirements.txt $CKAN_HOME/src/ckan/dev-requirements.txt
 RUN ckan-pip install --upgrade -r $CKAN_HOME/src/ckan/dev-requirements.txt
 
-# TMP-BUGFIX https://github.com/ckan/ckan/issues/3594		
- RUN ckan-pip install --upgrade urllib3		
+# TMP-BUGFIX https://github.com/ckan/ckan/issues/3594
+RUN ckan-pip install --upgrade urllib3
 
 # SetUp CKAN
 ADD . $CKAN_HOME/src/ckan/
