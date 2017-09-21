@@ -92,6 +92,10 @@ Assign IP address 10.0.0.2 to dokku.me
 
 `sudo nano /private/etc/hosts`
 
+Add `10.0.0.2   dokku.me` to the end of the file
+
+![Alt text](screenshot.png?raw=true "openAFRICA")
+
 Fire up the virtual machine
 
 `vagrant up`
