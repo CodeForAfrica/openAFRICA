@@ -1,7 +1,7 @@
 # docker-compose build && docker-compose up
 ckan:
   container_name: ckan
-  image: ckan/ckan:latest
+  image: codeforafrica/ckan:latest
   links:
       - db
       - solr
