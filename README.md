@@ -80,16 +80,14 @@ We use [dokku](http://dokku.viewdocs.io/dokku/) for deployment so you'd need to 
 
 Once installed, we can do the following:
 
-**Create the Dokku app**
+1. Create the Dokku app and add a domain to it
 
 ``` 
 dokku apps:create ckan
 dokku domains:add ckan openafrica.net
 ```
 
-To run ckan locally, assign IP address 10.0.0.2 to openafrica.net
-
-**Letsencrypt**
+2. Add letsencrypt for free `https` certificate
 
 Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plugin and set the config variables
 
@@ -97,7 +95,7 @@ Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plug
 sudo dokku letsencrypt ckan
 ```
 
-**Solr + Redis + Postgres**
+3. Run Solr + Redis + Postgres
 
 Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) plugins and set the necessary environment variables
 
@@ -121,8 +119,10 @@ git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
 
+***NOTE:** Make sure to have the [appropraite permissions to push to dokku](?).*
+
 ---
 
 ## License
 
-MIT
+MIT <!-- Should be more... -->
