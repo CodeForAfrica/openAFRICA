@@ -97,7 +97,8 @@ Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plug
 
 **Solr + Redis + Postgres**
 
-Install the [solr], [redis], and [postgres] plugins and set the necessary environment variables
+Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) plugins and set the necessary environment variables
+
 ```sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
