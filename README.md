@@ -82,7 +82,8 @@ Once installed, we can do the following:
 
 **Create the Dokku app**
 
-```dokku apps:create ckan
+``` 
+dokku apps:create ckan
 dokku domains:add ckan openafrica.net
 ```
 
@@ -92,14 +93,16 @@ To run ckan locally, assign IP address 10.0.0.2 to openafrica.net
 
 Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plugin and set the config variables
 
-```sudo dokku letsencrypt ckan
+```
+sudo dokku letsencrypt ckan
 ```
 
 **Solr + Redis + Postgres**
 
 Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) plugins and set the necessary environment variables
 
-```sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
+```
+sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
 
@@ -113,7 +116,8 @@ dokku postgres:link postgres ckan
 
 Once done, you can push this repository to dokku:
 
-```git remote add dokku dokku@openafrica.net:ckan
+```
+git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
 
