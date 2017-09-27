@@ -78,66 +78,30 @@ docker push codeforafrica/ckan:latest
 
 We use [dokku](http://dokku.viewdocs.io/dokku/) for deployment so you'd need to install and set it up first.
 
-**Install Dokku on MAC:**
-
-Dokku runs on Linux so MAC users will have to setup dokku on a virtual machine
-
-```brew cask install virtualbox
-brew cask install vagrant
-git clone https://github.com/dokku/dokku.git
-cd dokku
-```
-
-Assign IP address 10.0.0.2 to dokku.me
-
-`sudo nano /private/etc/hosts`
-
-Add `10.0.0.2   dokku.me` to the end of the file
-
-![Alt text](screenshot.png?raw=true "openAFRICA")
-
-Fire up the virtual machine
-
-`vagrant up`
-
-Add vagrant SSH key to the running Dokku server
-
-`cat ~/.ssh/id_rsa.pub | ssh -o "StrictHostKeyChecking=no" -i ~/.vagrant.d/insecure_private_key vagrant@dokku.me "sudo sshcommand acl-add dokku vagrant"`
-
-Upload your ssh key to Dokku server
-
-`cat ~/.ssh/id_rsa.pub | ssh root@dokku.me "sudo sshcommand acl-add dokku <name>"`
-
-To ensure everything is running fine, run `ssh root@dokku.me version`
-
-Access your machine using `vagrant ssh`
-
-
 Once installed, we can do the following:
 
 **Create the Dokku app**
 
-```vagrant ssh
-dokku apps:create ckan
+```dokku apps:create ckan
 dokku domains:add ckan openafrica.net
 ```
 
 To run ckan locally, assign IP address 10.0.0.2 to openafrica.net
 
-In the case you are using Vagrant, configure the DNS inside Vagrant
-
 **Letsencrypt**
 
-```sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
-dokku config:set --no-restart ckan DOKKU_LETSENCRYPT_EMAIL = <e-mail>
-sudo dokku letsencrypt ckan
+Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plugin and set the config variables
+
+```sudo dokku letsencrypt ckan
 ```
 
 **Solr + Redis + Postgres**
 
+Install the [solr], [redis], and [postgres] plugins and set the necessary environment variables
 ```sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+
 dokku solr:create solr
 dokku redis:create redis
 dokku postgres:create postgres
@@ -145,10 +109,6 @@ dokku solr:link solr ckan
 dokku redis:link redis ckan
 dokku postgres:link postgres ckan
 ```
-
-**Setting environment variables**
-
-`dokku config:set ckan CKAN_SQLALCHEMY_URL = <postgres_dsn>`
 
 Once done, you can push this repository to dokku:
 
