@@ -49,10 +49,19 @@ Please report on security vulnerabilities to support@codeforafrica.org. These wi
 
 <!-- We should make a docker-compose.yml for this. -->
 
+
 To set up your development environment:
 
-?
+```sh
+$ git clone https://github.com/CodeForAfricaLabs/openAFRICA.git
 
+$ cd ckan
+```
+
+Run this command (found on the docker-compose.yml):
+```sh
+docker-compose build && docker-compose up
+```
 
 ### Updating Docker Image
 

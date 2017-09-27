@@ -1,5 +1,4 @@
-# DO NOT USE 
-# docker build . -t ckan && docker run -d -p 80:5000 --link db:db --link redis:redis --link solr:solr ckan
+# docker build . -t ckan && docker run -d -p 5000:5000 --link db:db --link redis:redis --link solr:solr ckan
 
 FROM debian:jessie
 MAINTAINER Open Knowledge
@@ -11,12 +10,15 @@ ENV CKAN_SITE_URL http://localhost:5000
 
 # Install required packages
 RUN apt-get -q -y update && apt-get -q -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
-		python-dev \
+        libssl-dev \
+        libffi-dev \
+        build-essential \
+        python-dev \
         python-pip \
         python-virtualenv \
         libpq-dev \
         git-core \
-	&& apt-get -q clean
+        && apt-get -q clean
 
 # Download CKAN
 RUN git clone https://github.com/ckan/ckan.git /ckan
@@ -53,4 +55,5 @@ ENTRYPOINT ["/ckan-entrypoint.sh"]
 VOLUME ["/etc/ckan/default"]
 VOLUME ["/var/lib/ckan"]
 EXPOSE 5000
+
 CMD ["ckan-paster","serve","/etc/ckan/default/ckan.ini"]
