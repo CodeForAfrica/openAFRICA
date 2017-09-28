@@ -74,38 +74,75 @@ docker push codeforafrica/ckan:latest
 
 ---
 
-## Deployment (Untested)
+## Deployment
 
 We use [dokku](http://dokku.viewdocs.io/dokku/) for deployment so you'd need to install and set it up first.
 
 Once installed, we can do the following:
-```sh
-# Create the Dokku app
+
+1. Create the Dokku app and add a domain to it
+
+``` 
 dokku apps:create ckan
-dokku domains:add ckan http://openafrica.net
+dokku domains:add ckan openafrica.net
+```
 
-# Letsencrypt
-sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+2. Add letsencrypt for free `https` certificate
+
+Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plugin and set the config variables
+
+```
 sudo dokku letsencrypt ckan
+```
 
-# Solr + Redis
+3. Run Solr + Redis + Postgres
+
+Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) plugins and set the necessary environment variables
+
+```
 sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+
 dokku solr:create solr
 dokku redis:create redis
+dokku postgres:create postgres
 dokku solr:link solr ckan
 dokku redis:link redis ckan
+dokku postgres:link postgres ckan
 ```
 
 Once done, you can push this repository to dokku:
 
-```sh
+```
 git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
+
+***NOTE:** Make sure to have the [appropriate permissions to push to dokku](http://dokku.viewdocs.io/dokku/deployment/user-management/).*
 
 ---
 
 ## License
 
-MIT 
+MIT License
+
+Copyright (c) 2017 Code for Africa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
