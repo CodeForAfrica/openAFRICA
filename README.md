@@ -119,7 +119,7 @@ git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
 
-***NOTE:** Make sure to have the [appropraite permissions to push to dokku](?).*
+***NOTE:** Make sure to have the [appropriate permissions to push to dokku](http://dokku.viewdocs.io/dokku/deployment/user-management/).*
 
 ---
 
