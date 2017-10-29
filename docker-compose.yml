@@ -1,0 +1,38 @@
+version: "2.2"
+
+# docker-compose build && docker-compose up
+# If you experience problems with the CKAN container not being
+# able to connect to the DB, then most likely the DB has not
+# started up quickly enough. Just do "docker-compose up ckan"
+# again to retry
+services:
+  ckan:
+    build: .
+    links:
+        - solr
+        - redis
+    ports:
+        - "5000:5000"
+    environment:
+        - CKAN_REDIS_URL=redis://redis:6379/0
+        - CKAN_SOLR_URL=http://solr:8983/solr/ckan
+        - CKAN_SITE_URL=http://localhost:5000
+        - CKAN___BEAKER__SESSION__SECRET=supersecret
+    env_file: env.dev
+    volumes:
+      - ./ckan.ini:/ckan.ini
+      - ckan-filestore:/var/lib/ckan/default
+
+  solr:
+    image: openafrica/solr:latest
+    ports:
+        - "8983:8983"
+    volumes:
+      - solr-data:/opt/solr/server/solr/ckan
+
+  redis:
+    image: redis:latest
+
+volumes:
+  solr-data:
+  ckan-filestore:
