@@ -14,40 +14,21 @@ We use CKAN's own vanilla releases but because they haven't properly adopted Doc
 The ckan extensions we are using include:
 
 - ckanext-openafrica - https://github.com/CodeForAfrica/ckanext-openafrica
+- ckanext-datarequests - https://github.com/CodeForAfricaLabs/ckanext-datarequests
 - ckanext-harvester - ?
 - ckanext-socialite (experimental) - https://github.com/CodeForAfricaLabs/ckanext-socialite
 - ckanext-social - https://github.com/CodeForAfricaLabs/ckanext-social
+- ckanext-notify - https://github.com/CodeForAfricaLabs/ckanext-notify
+- ckanext-s3filestore - https://github.com/CodeForAfricaLabs/ckanext-s3filestore
+- ckanext-showcase - https://github.com/ckan/ckanext-showcase
+- ckanext-googleanalytics - https://github.com/ckan/ckanext-googleanalytics
+- ckanext-issues - https://github.com/ckan/ckanext-issues
+- ckanext-gdoc - https://github.com/OpenUpSA/ckanext-gdoc
 
-
----
-
-## Contributing
-
-Thank you for considering to contribute to this project. You are awesome. :)
-
-To get you started, here are few pointers:
-
-- We have a number of Github issues to work through here:
-  - openAFRICA deploy: https://github.com/CodeForAfricaLabs/openAFRICA/issues
-  - ckanext-openafrica: https://github.com/CodeForAfrica/ckanext-openafrica/issues
-  - ckanext-socialite: https://github.com/CodeForAfricaLabs/ckanext-socialite/issues
-  - ckanext-social: https://github.com/CodeForAfricaLabs/ckanext-social/issues
-- If you believe an issue is with CKAN core or related extenstions, post them here:
-  - CKAN core: https://github.com/ckan/ckan/issues
-  - ckanext-harvester: ?
-
-Check out the [development docs](#development) to get started on this repo locally.
-
-
-### Security Vulnerabilities
-
-Please report on security vulnerabilities to support@codeforafrica.org. These will be promptly acted on.
 
 ---
 
 ## Development
-
-<!-- We should make a docker-compose.yml for this. -->
 
 
 To set up your development environment:
@@ -55,27 +36,22 @@ To set up your development environment:
 ```sh
 $ git clone https://github.com/CodeForAfricaLabs/openAFRICA.git
 
-$ cd ckan
+$ cd openAFRICA
 ```
 
 Run this command (found on the docker-compose.yml):
+
 ```sh
 docker-compose build && docker-compose up
 ```
 
-### Updating Docker Image
+### Updating CKAN Docker Image
 
-To update the `codeforafrica/ckan:latest` Docker image:
+To update the `openafrica/ckan:latest` Docker image, edit `Makefile` and then run:
+
 ```sh
-git clone https://github.com/ckan/ckan.git && git checkout ckan-2.6.3 && cd ckan
-docker build -t codeforafrica/ckan:latest .
+make ckan
 ```
-
-You can also push to Docker Hub:
-```sh
-docker push codeforafrica/ckan:latest
-```
-
 
 ### Tests
 
@@ -106,19 +82,19 @@ sudo dokku letsencrypt ckan
 
 3. Run Solr + Redis + Postgres
 
-Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) plugins and set the necessary environment variables
+Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) (optional: we use RDS) plugins and set the necessary environment variables
 
 ```
 sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
-sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres  # Optional
 
 dokku solr:create solr
 dokku redis:create redis
-dokku postgres:create postgres
+dokku postgres:create postgres  # Optional
 dokku solr:link solr ckan
 dokku redis:link redis ckan
-dokku postgres:link postgres ckan
+dokku postgres:link postgres ckan  # Optional
 ```
 
 Once done, you can push this repository to dokku:
@@ -129,6 +105,30 @@ git push dokku
 ```
 
 ***NOTE:** Make sure to have the [appropriate permissions to push to dokku](http://dokku.viewdocs.io/dokku/deployment/user-management/).*
+
+---
+
+## Contributing
+
+Thank you for considering to contribute to this project. You are awesome. :)
+
+To get you started, here are few pointers:
+
+- We have a number of Github issues to work through here:
+  - openAFRICA deploy: https://github.com/CodeForAfricaLabs/openAFRICA/issues
+  - ckanext-openafrica: https://github.com/CodeForAfrica/ckanext-openafrica/issues
+  - ckanext-socialite: https://github.com/CodeForAfricaLabs/ckanext-socialite/issues
+  - ckanext-social: https://github.com/CodeForAfricaLabs/ckanext-social/issues
+- If you believe an issue is with CKAN core or related extenstions, post them here:
+  - CKAN core: https://github.com/ckan/ckan/issues
+  - ckanext-harvester: ?
+
+Check out the [development docs](#development) to get started on this repo locally.
+
+
+### Security Vulnerabilities
+
+Please report on security vulnerabilities to security@codeforafrica.org. These will be promptly acted on.
 
 ---
 
