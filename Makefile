@@ -32,3 +32,14 @@ solr:
 	docker push openafrica/solr:2.3
 	rm -rf ckan
 
+
+datapusher:
+	docker build -t openafrica/ckan-datapusher:latest contrib/ckan-datapusher
+
+datapusher-latest:
+	docker build -t openafrica/ckan-datapusher:latest contrib/ckan-datapusher
+	docker push openafrica/ckan-datapusher:latest
+
+datapusher-release:
+	docker build -t openafrica/ckan-datapusher:0.1 contrib/ckan
+	docker push openafrica/ckan-datapusher:0.1
