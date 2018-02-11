@@ -41,5 +41,5 @@ datapusher-latest:
 	docker push openafrica/ckan-datapusher:latest
 
 datapusher-release:
-	docker build -t openafrica/ckan-datapusher:0.1 contrib/ckan
+	docker build -t openafrica/ckan-datapusher:0.1 contrib/ckan-datapusher
 	docker push openafrica/ckan-datapusher:0.1
