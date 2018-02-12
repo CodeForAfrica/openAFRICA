@@ -1,7 +1,7 @@
 # openAFRICA
 *The continent's largest volunteer-driven open data portal.*
 
-![CKAN version](https://img.shields.io/badge/CKAN-v2.6.3-brightgreen.svg)
+![CKAN version](https://img.shields.io/badge/CKAN-v2.6.4-brightgreen.svg)
 
 This repo seeks to streamline deployment of the openAFRICA platform by pulling together the different components used for [openAFRICA](https://openafrica.net/) and deploy using [dokku](http://dokku.viewdocs.io/dokku/).
 
@@ -61,7 +61,17 @@ make ckan
 
 ## Deployment
 
-We use [dokku](http://dokku.viewdocs.io/dokku/) for deployment so you'd need to install and set it up first.
+We use [dokku](http://dokku.viewdocs.io/dokku/) for deployment so you'd need to install and set it up first;
+
+```
+ # for debian systems, installs dokku via apt-get
+ $ wget https://raw.githubusercontent.com/dokku/dokku/v0.11.3/bootstrap.sh
+ $ sudo DOKKU_TAG=v0.11.3 bash bootstrap.sh
+ # go to your server's IP and follow the web installer
+```
+
+
+### Install + Create Dependencies
 
 Once installed, we can do the following:
 
@@ -77,32 +87,154 @@ dokku domains:add ckan openafrica.net
 Install the [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) plugin and set the config variables
 
 ```
-sudo dokku letsencrypt ckan
+sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+dokku config:set --no-restart ckan DOKKU_LETSENCRYPT_EMAIL=support@codeforafrica.org
 ```
 
-3. Run Solr + Redis + Postgres
+3. Create CKAN Solr Instance
 
-Install the [solr](https://github.com/dokku/dokku-solr), [redis](https://github.com/dokku/dokku-redis), and [postgres](https://github.com/dokku/dokku-postgres) (optional: we use RDS) plugins and set the necessary environment variables
+CKAN uses a special schema for Solr so you should deploy `openafrica/solr` 
 
 ```
-sudo dokku plugin:install https://github.com/dokku/dokku-solr.git solr
+dokku apps:create ckan-solr
+
+sudo docker volume create --name ckan-solr
+dokku docker-options:add ckan-solr run,deploy --volume ckan-solr:/opt/solr/server/solr/ckan
+
+sudo docker pull openafrica/solr:latest
+sudo docker tag openafrica/solr:latest dokku/ckan-solr:latest
+
+dokku tags:deploy ckan-solr latest
+
+```
+
+4. Create Redis Instance
+
+Install the [redis](https://github.com/dokku/dokku-redis) plugin.
+
+```
 sudo dokku plugin:install https://github.com/dokku/dokku-redis.git redis
-sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres  # Optional
+dokku redis:create ckan-redis
 
-dokku solr:create solr
-dokku redis:create redis
-dokku postgres:create postgres  # Optional
-dokku solr:link solr ckan
-dokku redis:link redis ckan
-dokku postgres:link postgres ckan  # Optional
 ```
 
-Once done, you can push this repository to dokku:
+5. Create CKAN DataPusher Instance
+
+[DataPusher](https://github.com/ckan/datapusher) is a standalone web service that automatically downloads any CSV or XLS (Excel) data files from a CKAN site's resources when they are added to the CKAN site, parses them to pull out the actual data, then uses the DataStore API to push the data into the CKAN site's DataStore. 
+
+```
+dokku apps:create ckan-datapusher
+
+sudo docker pull openafrica/ckan-datapusher:latest
+sudo docker tag openafrica/ckan-datapusher:latest dokku/ckan-datapusher:latest
+
+dokku tags:deploy ckan-datapusher latest
+
+```
+
+6. Install Postgres (Optional)
+
+This is an optional step if you'd like to have Postgres installed locally;
+
+```
+sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+dokku postgres:create ckan-postgres
+
+```
+
+7. Set up S3
+
+Create a bucket and a programmatic access user, and grant the user full access to the bucket with the following policy
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::openafrica/*",
+                "arn:aws:s3:::openafrica"
+            ]
+        }
+    ]
+}
+```
+
+8. Create CKAN filestore volume
+
+Create a named docker volume and configure ckan to use the volume just so we can configure an upload path. It should be kept clear by the s3 plugin.
+
+```
+sudo docker volume create --name ckan-filestore
+dokku docker-options:add ckan run,deploy --volume ckan-filestore:/var/lib/ckan/default
+```
+
+### Configuration
+
+Now we configure to pull the dependencies together:
+
+Get the Redis Dsn (connection details) for setting in CKAN environment in the next step with /0 appended.
+
+```
+dokku redis:info ckan-redis
+```
+
+Set CKAN environment variables, replacing these examples with actual producation ones
+
+- REDIS_URL: use the Redis Dsn
+- SOLR_URL: use the alias given for the docker link below
+- BEAKER_SESSION_SECRET: this must be a secret long random string. Each time it changes it invalidates any active sessions.
+- S3FILESTORE__SIGNATURE_VERSION: use as-is - no idea why the plugin requires this.
+
+
+```
+dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/ckan_default \
+                      CKAN_REDIS_URL=.../0 \
+                      CKAN_INI=/ckan.ini \
+                      CKAN_SOLR_URL=http://solr:8983/solr/ckan \
+                      CKAN_SITE_URL=https://openafrica.net/ \
+                      CKAN___BEAKER__SESSION__SECRET= \
+                      CKAN_SMTP_SERVER= \
+                      CKAN_SMTP_USER= \
+                      CKAN_SMTP_PASSWORD= \
+                      CKAN_SMTP_MAIL_FROM=hello@openafrica.net \
+                      CKAN___CKANEXT__S3FILESTORE__AWS_BUCKET_NAME=openafrica \
+                      CKAN___CKANEXT__S3FILESTORE__AWS_ACCESS_KEY_ID= \
+                      CKAN___CKANEXT__S3FILESTORE__AWS_SECRET_ACCESS_KEY= \
+                      CKAN___CKANEXT__S3FILESTORE__HOST_NAME=http://s3-eu-west-1.amazonaws.com/openafrica \
+                      CKAN___CKANEXT__S3FILESTORE__REGION_NAME=eu-west-1 \
+                      CKAN___CKANEXT__S3FILESTORE__SIGNATURE_VERSION=s3v4 \
+```
+
+Link CKAN with Redis, Solr, and CKAN DataPusher;
+```
+dokku redis:link ckan-redis ckan  #noqa
+dokku docker-options:add ckan run,deploy --link ckan-solr.web.1:solr
+dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datapusher
+```
+
+
+
+### Deploy CKAN
+
+
+Once done with installing and configuring, you can push this repository to dokku:
 
 ```
 git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
+
+Lastly, let's make sure we encrypt traffic:
+
+```
+dokku letsencrypt ckan
+```
+
 
 ***NOTE:** Make sure to have the [appropriate permissions to push to dokku](http://dokku.viewdocs.io/dokku/deployment/user-management/).*
 

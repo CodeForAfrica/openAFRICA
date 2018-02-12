@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Code for Africa
+MAINTAINER Code for Africa <support@codeforafrica.org>
 
 ENV DEBIAN_FRONTEND noninteractive
 
