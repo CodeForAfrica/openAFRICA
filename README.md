@@ -77,7 +77,7 @@ Once installed, we can do the following:
 
 1. Create the Dokku app and add a domain to it
 
-``` 
+```
 dokku apps:create ckan
 dokku domains:add ckan openafrica.net
 ```
@@ -93,7 +93,7 @@ dokku config:set --no-restart ckan DOKKU_LETSENCRYPT_EMAIL=support@codeforafrica
 
 3. Create CKAN Solr Instance
 
-CKAN uses a special schema for Solr so you should deploy `openafrica/solr` 
+CKAN uses a special schema for Solr so you should deploy `openafrica/solr`
 
 ```
 dokku apps:create ckan-solr
@@ -120,7 +120,7 @@ dokku redis:create ckan-redis
 
 5. Create CKAN DataPusher Instance
 
-[DataPusher](https://github.com/ckan/datapusher) is a standalone web service that automatically downloads any CSV or XLS (Excel) data files from a CKAN site's resources when they are added to the CKAN site, parses them to pull out the actual data, then uses the DataStore API to push the data into the CKAN site's DataStore. 
+[DataPusher](https://github.com/ckan/datapusher) is a standalone web service that automatically downloads any CSV or XLS (Excel) data files from a CKAN site's resources when they are added to the CKAN site, parses them to pull out the actual data, then uses the DataStore API to push the data into the CKAN site's DataStore.
 
 ```
 dokku apps:create ckan-datapusher
@@ -205,7 +205,7 @@ dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/
                       CKAN___CKANEXT__S3FILESTORE__AWS_BUCKET_NAME=openafrica \
                       CKAN___CKANEXT__S3FILESTORE__AWS_ACCESS_KEY_ID= \
                       CKAN___CKANEXT__S3FILESTORE__AWS_SECRET_ACCESS_KEY= \
-                      CKAN___CKANEXT__S3FILESTORE__HOST_NAME=http://s3-eu-west-1.amazonaws.com/openafrica \
+                      CKAN___CKANEXT__S3FILESTORE__HOST_NAME=http://s3-eu-west-1.amazonaws.com \
                       CKAN___CKANEXT__S3FILESTORE__REGION_NAME=eu-west-1 \
                       CKAN___CKANEXT__S3FILESTORE__SIGNATURE_VERSION=s3v4 \
 ```
@@ -215,6 +215,16 @@ Link CKAN with Redis, Solr, and CKAN DataPusher;
 dokku redis:link ckan-redis ckan  #noqa
 dokku docker-options:add ckan run,deploy --link ckan-solr.web.1:solr
 dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datapusher
+```
+
+### Configure Database
+
+Before you can run CKAN for the first time, you need to run `db init` to initialize your database
+
+```
+dokku enter ckan
+cd src/ckan
+paster db init -c /ckan.ini
 ```
 
 
