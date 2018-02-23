@@ -227,7 +227,17 @@ cd src/ckan
 paster db init -c /ckan.ini
 ```
 
+### Scheduled Jobs
+For OpenAfrica to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. These jobs are setup in crontab
 
+```sh
+@hourly echo '{}' | /usr/lib/ckan/default/bin/paster --plugin=ckan post -c /etc/ckan/default/production.ini /api/action/send_email_notifications > /dev/null
+
+@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini
+@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+
+*/15 *  *   *   *     /usr/lib/ckan/default/bin/paster --plugin=ckanext-harvest harvester run --config=/etc/ckan/default/production.ini
+```
 
 ### Deploy CKAN
 
