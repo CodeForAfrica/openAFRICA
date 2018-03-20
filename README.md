@@ -1,7 +1,7 @@
 # openAFRICA
 *The continent's largest volunteer-driven open data portal.*
 
-![CKAN version](https://img.shields.io/badge/CKAN-v2.6.4-brightgreen.svg)
+![CKAN version](https://img.shields.io/badge/CKAN-v2.6.5-brightgreen.svg)
 
 This repo seeks to streamline deployment of the openAFRICA platform by pulling together the different components used for [openAFRICA](https://openafrica.net/) and deploy using [dokku](http://dokku.viewdocs.io/dokku/).
 
