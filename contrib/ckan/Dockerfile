@@ -10,5 +10,5 @@ RUN apt-get -qq install -y python-dev libpq-dev python-pip \
 
 RUN pip install -q --upgrade pip && pip install -q --upgrade setuptools
 
-RUN pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.6.4#egg=ckan'
+RUN pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.6.5#egg=ckan'
 RUN pip install -r /src/ckan/requirements.txt
