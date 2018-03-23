@@ -13,3 +13,5 @@ boto3>=1.4.4
 -e git+https://github.com/ckan/ckanext-issues.git#egg=ckanext-issues
 
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
+
+-e git+https://github.com/CodeForAfricaLabs/ckanext-harvest.git#egg=ckanext-harvest

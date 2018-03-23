@@ -233,6 +233,8 @@ Add the following entries
 0 * * * * echo '{}' | dokku --rm run ckan paster --plugin=ckan post -c /ckan.ini /api/action/send_email_notifications > /dev/null
 
 0 * * * * dokku --rm run ckan paster --plugin=ckan tracking update -c /ckan.ini
+
+*/15 * * * * dokku --rm run ckan paster --plugin=ckanext-harvest harvester run --config=/ckan.ini
 ```
 
 ### Deploy CKAN
@@ -245,7 +247,7 @@ git remote add dokku dokku@openafrica.net:ckan
 git push dokku
 ```
 
-### Configure Database
+### Initialize Database
 
 Before you can run CKAN for the first time, you need to run `db init` to initialize your database
 
