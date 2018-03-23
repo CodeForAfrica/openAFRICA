@@ -217,16 +217,6 @@ dokku docker-options:add ckan run,deploy --link ckan-solr.web.1:solr
 dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datapusher
 ```
 
-### Configure Database
-
-Before you can run CKAN for the first time, you need to run `db init` to initialize your database
-
-```
-dokku enter ckan
-cd src/ckan
-paster db init -c /ckan.ini
-```
-
 ### Scheduled Jobs
 For OpenAfrica to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. These jobs are setup in crontab
 
@@ -247,6 +237,16 @@ Once done with installing and configuring, you can push this repository to dokku
 ```
 git remote add dokku dokku@openafrica.net:ckan
 git push dokku
+```
+
+### Configure Database
+
+Before you can run CKAN for the first time, you need to run `db init` to initialize your database
+
+```
+dokku enter ckan
+cd src/ckan
+paster db init -c /ckan.ini
 ```
 
 Lastly, let's make sure we encrypt traffic:
