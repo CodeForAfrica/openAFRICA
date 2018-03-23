@@ -193,6 +193,8 @@ Set CKAN environment variables, replacing these examples with actual producation
 
 ```
 dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/ckan_default \
+                      CKAN_DATASTORE_READ_URL=postgresql://ckan_default:pass@localhost/datastore_default
+                      CKAN_DATASTORE_WRITE_URL=postgresql://datastore_default:pass@localhost/datastore_default
                       CKAN_REDIS_URL=.../0 \
                       CKAN_INI=/ckan.ini \
                       CKAN_SOLR_URL=http://solr:8983/solr/ckan \
@@ -218,15 +220,20 @@ dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datap
 ```
 
 ### Scheduled Jobs
-For OpenAfrica to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. These jobs are setup in crontab
+For OpenAfrica to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. To create a scheduled job that is executed by a Dokku application, follow these steps:
 
 ```sh
-@hourly echo '{}' | /usr/lib/ckan/default/bin/paster --plugin=ckan post -c /etc/ckan/default/production.ini /api/action/send_email_notifications > /dev/null
+sudo su
+su dokku
+crontab -e
+```
 
-@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini
-@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+Add the following entries
 
-*/15 *  *   *   *     /usr/lib/ckan/default/bin/paster --plugin=ckanext-harvest harvester run --config=/etc/ckan/default/production.ini
+```sh
+0 * * * * echo '{}' | dokku --rm run ckan paster --plugin=ckan post -c /ckan.ini /api/action/send_email_notifications > /dev/null
+
+0 * * * * dokku --rm run ckan paster --plugin=ckan tracking update -c /ckan.ini
 ```
 
 ### Deploy CKAN
