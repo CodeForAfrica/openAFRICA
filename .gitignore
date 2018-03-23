@@ -109,3 +109,6 @@ ckan-*.tar.gz
 # Env
 env*
 !env.tmpl
+
+# IDE 
+.vscode/*

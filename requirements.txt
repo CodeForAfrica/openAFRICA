@@ -6,7 +6,7 @@ boto3>=1.4.4
 -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
 -e git+https://github.com/CodeForAfricaLabs/ckanext-datarequests.git#egg=ckanext-datarequests
--e git+https://github.com/keitaroinc/ckanext-s3filestore.git#egg=ckanext-s3filestore
+-e git+https://github.com/CodeForAfricaLabs/ckanext-s3filestore#egg=ckanext-s3filestore
 
 -e git+https://github.com/okfn/ckanext-envvars.git#egg=ckanext-envvars
 -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase
