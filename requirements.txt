@@ -2,6 +2,10 @@ gunicorn==19.7.1
 gevent==1.2.2
 boto3>=1.4.4
 
+# For harvester
+pika==0.9.8
+redis==2.10.1
+
 # CKAN Extensions
 -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
@@ -14,4 +18,4 @@ boto3>=1.4.4
 
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
 
--e git+https://github.com/CodeForAfricaLabs/ckanext-harvest.git#egg=ckanext-harvest
+-e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
