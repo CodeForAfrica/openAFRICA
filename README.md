@@ -144,7 +144,7 @@ dokku postgres:create ckan-postgres
 
 7. Install RabbitMQ
 
-Install the [rabbitmq](https://github.com/dokku/dokku-rabbitmq) plugin (The harvest extension can uses this as its backend)
+Install the [RabbitMQ](https://github.com/dokku/dokku-rabbitmq) plugin (The harvest extension uses this as its backend)
 
 ```
 sudo dokku plugin:install https://github.com/dokku/dokku-rabbitmq.git rabbitmq
