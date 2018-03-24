@@ -142,7 +142,16 @@ dokku postgres:create ckan-postgres
 
 ```
 
-7. Set up S3
+7. Install RabbitMQ
+
+Install the [rabbitmq](https://github.com/dokku/dokku-rabbitmq) plugin (The harvest extension can uses this as its backend)
+
+```
+sudo dokku plugin:install https://github.com/dokku/dokku-rabbitmq.git rabbitmq
+dokku rabbitmq:create ckan-rabbitmq
+```
+
+8. Set up S3
 
 Create a bucket and a programmatic access user, and grant the user full access to the bucket with the following policy
 
@@ -164,7 +173,7 @@ Create a bucket and a programmatic access user, and grant the user full access t
 }
 ```
 
-8. Create CKAN filestore volume
+9. Create CKAN filestore volume
 
 Create a named docker volume and configure ckan to use the volume just so we can configure an upload path. It should be kept clear by the s3 plugin.
 
@@ -182,6 +191,12 @@ Get the Redis Dsn (connection details) for setting in CKAN environment in the ne
 ```
 dokku redis:info ckan-redis
 ```
+Get the RabbitMQ Dsn (connection details) and extract the `username`, `password`, `hostname`, `virtualhost` and `port`. You need these details because the harvester extension in its current form does not support configuration using RabbitMQ URI scheme. The URI is in the form
+
+```
+amqp://username:password@hostname:port/virtualhost
+```
+
 
 Set CKAN environment variables, replacing these examples with actual producation ones
 
@@ -210,6 +225,11 @@ dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/
                       CKAN___CKANEXT__S3FILESTORE__HOST_NAME=http://s3-eu-west-1.amazonaws.com \
                       CKAN___CKANEXT__S3FILESTORE__REGION_NAME=eu-west-1 \
                       CKAN___CKANEXT__S3FILESTORE__SIGNATURE_VERSION=s3v4 \
+                      CKAN__HARVEST__MQ__VIRTUAL_HOST=ckan-rabbitmq \
+                      CKAN__HARVEST__MQ__PORT=5672 \
+                      CKAN__HARVEST__MQ__HOSTNAME=dokku-rabbitmq-ckan-rabbitmq \
+                      CKAN__HARVEST__MQ__PASSWORD=912abee9882be7ca8718d3cab7263cfd \
+                      CKAN__HARVEST__MQ__USER_ID=ckan-rabbitmq \
 ```
 
 Link CKAN with Redis, Solr, and CKAN DataPusher;
