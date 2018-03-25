@@ -1,6 +1,8 @@
 FROM openafrica/ckan:latest
 MAINTAINER Code for Africa <support@codeforafrica.org>
 
+EXPOSE 5000/tcp
+
 ADD requirements.txt /requirements.txt
 RUN pip install -q -r /requirements.txt
 
