@@ -15,7 +15,7 @@ The ckan extensions we are using include:
 
 - ckanext-openafrica - https://github.com/CodeForAfrica/ckanext-openafrica
 - ckanext-datarequests - https://github.com/CodeForAfricaLabs/ckanext-datarequests
-- ckanext-harvester - ?
+- ckanext-harvester - https://github.com/ckan/ckanext-harvest
 - ckanext-socialite (experimental) - https://github.com/CodeForAfricaLabs/ckanext-socialite
 - ckanext-social - https://github.com/CodeForAfricaLabs/ckanext-social
 - ckanext-notify - https://github.com/CodeForAfricaLabs/ckanext-notify
@@ -142,7 +142,16 @@ dokku postgres:create ckan-postgres
 
 ```
 
-7. Set up S3
+7. Install RabbitMQ
+
+Install the [RabbitMQ](https://github.com/dokku/dokku-rabbitmq) plugin (The harvest extension uses this as its backend)
+
+```
+sudo dokku plugin:install https://github.com/dokku/dokku-rabbitmq.git rabbitmq
+dokku rabbitmq:create ckan-rabbitmq
+```
+
+8. Set up S3
 
 Create a bucket and a programmatic access user, and grant the user full access to the bucket with the following policy
 
@@ -164,7 +173,7 @@ Create a bucket and a programmatic access user, and grant the user full access t
 }
 ```
 
-8. Create CKAN filestore volume
+9. Create CKAN filestore volume
 
 Create a named docker volume and configure ckan to use the volume just so we can configure an upload path. It should be kept clear by the s3 plugin.
 
@@ -182,6 +191,12 @@ Get the Redis Dsn (connection details) for setting in CKAN environment in the ne
 ```
 dokku redis:info ckan-redis
 ```
+Get the RabbitMQ Dsn (connection details) and extract the `username`, `password`, `hostname`, `virtualhost` and `port`. You need these details because the harvester extension in its current form does not support configuration using RabbitMQ URI scheme. The URI is in the form
+
+```
+amqp://username:password@hostname:port/virtualhost
+```
+
 
 Set CKAN environment variables, replacing these examples with actual producation ones
 
@@ -193,6 +208,8 @@ Set CKAN environment variables, replacing these examples with actual producation
 
 ```
 dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/ckan_default \
+                      CKAN_DATASTORE_READ_URL=postgresql://ckan_default:pass@localhost/datastore_default \
+                      CKAN_DATASTORE_WRITE_URL=postgresql://datastore_default:pass@localhost/datastore_default \
                       CKAN_REDIS_URL=.../0 \
                       CKAN_INI=/ckan.ini \
                       CKAN_SOLR_URL=http://solr:8983/solr/ckan \
@@ -208,6 +225,11 @@ dokku config:set ckan CKAN_SQLALCHEMY_URL=postgres://ckan_default:password@host/
                       CKAN___CKANEXT__S3FILESTORE__HOST_NAME=http://s3-eu-west-1.amazonaws.com \
                       CKAN___CKANEXT__S3FILESTORE__REGION_NAME=eu-west-1 \
                       CKAN___CKANEXT__S3FILESTORE__SIGNATURE_VERSION=s3v4 \
+                      CKAN__HARVEST__MQ__VIRTUAL_HOST=ckan-rabbitmq \
+                      CKAN__HARVEST__MQ__PORT=5672 \
+                      CKAN__HARVEST__MQ__HOSTNAME=dokku-rabbitmq-ckan-rabbitmq \
+                      CKAN__HARVEST__MQ__PASSWORD=912abee9882be7ca8718d3cab7263cfd \
+                      CKAN__HARVEST__MQ__USER_ID=ckan-rabbitmq \
 ```
 
 Link CKAN with Redis, Solr, and CKAN DataPusher;
@@ -217,26 +239,22 @@ dokku docker-options:add ckan run,deploy --link ckan-solr.web.1:solr
 dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datapusher
 ```
 
-### Configure Database
-
-Before you can run CKAN for the first time, you need to run `db init` to initialize your database
-
-```
-dokku enter ckan
-cd src/ckan
-paster db init -c /ckan.ini
-```
-
 ### Scheduled Jobs
-For OpenAfrica to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. These jobs are setup in crontab
+For openAFRICA to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. To create a scheduled job that is executed by a Dokku application, follow these steps:
 
 ```sh
-@hourly echo '{}' | /usr/lib/ckan/default/bin/paster --plugin=ckan post -c /etc/ckan/default/production.ini /api/action/send_email_notifications > /dev/null
+sudo su dokku
+crontab -e
+```
 
-@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini
-@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+Add the following entries
 
-*/15 *  *   *   *     /usr/lib/ckan/default/bin/paster --plugin=ckanext-harvest harvester run --config=/etc/ckan/default/production.ini
+```sh
+0 * * * * echo '{}' | dokku --rm run ckan paster --plugin=ckan post -c /ckan.ini /api/action/send_email_notifications > /dev/null
+
+0 * * * * dokku --rm run ckan paster --plugin=ckan tracking update -c /ckan.ini
+
+*/15 * * * * dokku --rm run ckan paster --plugin=ckanext-harvest harvester run --config=/ckan.ini
 ```
 
 ### Deploy CKAN
@@ -247,6 +265,16 @@ Once done with installing and configuring, you can push this repository to dokku
 ```
 git remote add dokku dokku@openafrica.net:ckan
 git push dokku
+```
+
+### Initialize Database
+
+Before you can run CKAN for the first time, you need to run `db init` to initialize your database
+
+```
+dokku enter ckan
+cd src/ckan
+paster db init -c /ckan.ini
 ```
 
 Lastly, let's make sure we encrypt traffic:
