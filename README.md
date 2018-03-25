@@ -15,7 +15,7 @@ The ckan extensions we are using include:
 
 - ckanext-openafrica - https://github.com/CodeForAfrica/ckanext-openafrica
 - ckanext-datarequests - https://github.com/CodeForAfricaLabs/ckanext-datarequests
-- ckanext-harvester - ?
+- ckanext-harvester - https://github.com/ckan/ckanext-harvest
 - ckanext-socialite (experimental) - https://github.com/CodeForAfricaLabs/ckanext-socialite
 - ckanext-social - https://github.com/CodeForAfricaLabs/ckanext-social
 - ckanext-notify - https://github.com/CodeForAfricaLabs/ckanext-notify
