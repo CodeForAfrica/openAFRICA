@@ -240,7 +240,7 @@ dokku docker-options:add ckan run,deploy --link ckan-datapusher.web.1:ckan-datap
 ```
 
 ### Scheduled Jobs
-For OpenAFRICA to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. To create a scheduled job that is executed by a Dokku application, follow these steps:
+For openAFRICA to work perfectly, some jobs have to run at certain times e.g. updating tracking statistics and rebuilding the search index for newly uploaded datasets. To create a scheduled job that is executed by a Dokku application, follow these steps:
 
 ```sh
 sudo su dokku
