@@ -21,3 +21,5 @@ ckanext-pdfview
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
 
 -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
+
+-e git+https://github.com/jqnatividad/ckanext-officedocs.git#egg=ckanext-officedocs
