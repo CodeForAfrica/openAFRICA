@@ -1,5 +1,4 @@
-FROM openafrica/ckan:latest
-MAINTAINER Code for Africa <support@codeforafrica.org>
+FROM openafrica/ckan:2.6.6
 
 EXPOSE 5000/tcp
 
