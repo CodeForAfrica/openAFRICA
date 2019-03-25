@@ -1,10 +1,5 @@
 gunicorn==19.7.1
 gevent==1.2.2
-boto3>=1.4.4
-
-# For harvester
-pika==0.9.8
-redis==2.10.1
 
 # CKAN Extensions
 ckanext-pdfview
@@ -18,8 +13,8 @@ ckanext-pdfview
 -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase
 -e git+https://github.com/ckan/ckanext-issues.git#egg=ckanext-issues
 
+-e git+https://github.com/ckan/ckanext-harvest.git@v1.1.4#egg=ckanext-harvest
+-e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
+
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
-
--e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
-
 -e git+https://github.com/jqnatividad/ckanext-officedocs.git#egg=ckanext-officedocs
