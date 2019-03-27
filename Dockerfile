@@ -17,7 +17,7 @@ COPY contrib/ckan_harvesting.conf /etc/supervisor/conf.d/ckan_harvesting.conf
 # RUN ln -s ./src/ckan/ckan/config/who.ini /who.ini
 ADD ckan.ini /ckan.ini
 
-COPY ./contrib/entrypoint.sh /docker-entrypoint.sh
+COPY contrib/entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
