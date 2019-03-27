@@ -9,6 +9,7 @@ services:
         - db
         - solr
         - redis
+        - rabbitmq
     ports:
         - "5000:5000"
     environment:
@@ -17,6 +18,7 @@ services:
         - CKAN_SOLR_URL=http://solr:8983/solr/ckan
         - CKAN_SITE_URL=http://localhost:5000
         - CKAN___BEAKER__SESSION__SECRET=supersecret
+        - CKAN_RABBITMQ_URL='amqp://localhost'
     env_file: env.dev
     volumes:
       - ./ckan.ini:/ckan.ini
@@ -44,8 +46,10 @@ services:
 
   redis:
     image: redis:latest
-  
 
+  rabbitmq:
+    image: rabbitmq:latest
+  
 volumes:
   solr-data:
   ckan-filestore:
