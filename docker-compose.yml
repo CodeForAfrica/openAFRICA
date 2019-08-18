@@ -22,7 +22,7 @@ services:
       - ./ckan.ini:/ckan.ini
       - ckan-filestore:/var/lib/ckan/default
   db:
-    image: postgres:9.5
+    image: postgres:9.6
     ports:
       - "54321:5432"
     environment:
@@ -31,12 +31,14 @@ services:
       - POSTGRES_DB=ckan_default
       - PGUSER=ckan_default
       - PGPASSWORD=pass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
 
   datapusher:
     build: contrib/ckan-datapusher
     
   solr:
-    image: openafrica/solr:latest
+    image: codeforafrica/ckan-solr:latest
     ports:
         - "8983:8983"
     volumes:
@@ -47,5 +49,6 @@ services:
   
 
 volumes:
-  solr-data:
-  ckan-filestore:
+  postgres-data: {}
+  solr-data: {}
+  ckan-filestore: {}
