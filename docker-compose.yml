@@ -19,6 +19,8 @@ services:
 
   datapusher:
     build: contrib/ckan-datapusher
+    depends_on:
+      - web
   
   db:
     image: postgres:9.6
