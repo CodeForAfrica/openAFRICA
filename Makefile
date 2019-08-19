@@ -12,7 +12,6 @@ db-init:
 	docker-compose exec web paster --plugin=ckan db init
 db-upgrade:
 	docker-compose exec web paster --plugin=ckan db upgrade
-
 rebuild-index:
 	docker-compose exec web paster --plugin=ckan search-index rebuild -r
 
