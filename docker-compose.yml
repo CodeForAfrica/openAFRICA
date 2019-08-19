@@ -37,7 +37,7 @@ services:
       - ./contrib/postgres:/docker-entrypoint-initdb.d
   
   solr:
-    image: codeforafrica/ckan-solr:2.7
+    image: codeforafrica/ckan-solr:2.7.6
     ports:
         - "8983:8983"
     volumes:

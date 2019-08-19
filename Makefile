@@ -1,6 +1,9 @@
 build:
 	docker-compose build
 
+build-web:
+	docker-compose build web
+
 web:
 	docker-compose up web
 bash:
@@ -21,18 +24,18 @@ issues-init:
 
 
 ckan:
-	docker build --no-cache --build-arg CKAN_VERSION=2.7.0 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.7.0 contrib/ckan
+	docker build --no-cache --build-arg CKAN_VERSION=2.7.6 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.7.6 contrib/ckan
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
-	docker push codeforafrica/ckan:2.7.0
+	docker push codeforafrica/ckan:2.7.6
 
 solr:
-	docker build --no-cache --build-arg CKAN_VERSION=2.7.0 -t codeforafrica/ckan-solr:latest -t codeforafrica/ckan-solr:2.7 contrib/solr
+	docker build --no-cache --build-arg CKAN_VERSION=2.7.6 -t codeforafrica/ckan-solr:latest -t codeforafrica/ckan-solr:2.7.6 contrib/solr
 
 solr-publish:
 	docker push codeforafrica/ckan-solr:latest
-	docker push codeforafrica/ckan-solr:2.7
+	docker push codeforafrica/ckan-solr:2.7.6
 
 
 datapusher:

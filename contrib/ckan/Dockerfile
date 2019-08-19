@@ -2,7 +2,7 @@ FROM python:2.7
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ARG CKAN_VERSION=2.7.0
+ARG CKAN_VERSION=2.7.6
 
 RUN pip install -U -q pip setuptools
 
