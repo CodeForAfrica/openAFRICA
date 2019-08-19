@@ -1,4 +1,4 @@
-FROM codeforafrica/ckan:2.6.8
+FROM codeforafrica/ckan:2.7.0
 
 EXPOSE 5000/tcp
 

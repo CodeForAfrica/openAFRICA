@@ -2,7 +2,9 @@ FROM python:2.7
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ARG CKAN_VERSION=2.7.0
+
 RUN pip install -U -q pip setuptools
 
-RUN pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.6.8#egg=ckan'
-RUN pip install -r /src/ckan/requirements.txt
+RUN pip install -q -e "git+https://github.com/ckan/ckan.git@ckan-${CKAN_VERSION}#egg=ckan"
+RUN pip install -q -r /src/ckan/requirements.txt
