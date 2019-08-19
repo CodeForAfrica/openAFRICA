@@ -3,6 +3,8 @@ build:
 
 web:
 	docker-compose up web
+bash:
+	docker-compose exec web bash
 
 
 paster:
@@ -14,10 +16,12 @@ db-upgrade:
 	docker-compose exec web paster --plugin=ckan db upgrade
 rebuild-index:
 	docker-compose exec web paster --plugin=ckan search-index rebuild -r
+issues-init:
+	docker-compose exec web paster --plugin=ckanext-issues issues init_db
 
 
 ckan:
-	docker build --build-arg CKAN_VERSION=2.7.0 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.7.0 contrib/ckan
+	docker build --no-cache --build-arg CKAN_VERSION=2.7.0 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.7.0 contrib/ckan
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
