@@ -2,19 +2,21 @@ gunicorn==19.7.1
 gevent==1.2.2
 
 # CKAN Extensions
-ckanext-pdfview
 
 -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
--e git+https://github.com/CodeForAfricaLabs/ckanext-datarequests.git#egg=ckanext-datarequests
--e git+https://github.com/CodeForAfricaLabs/ckanext-s3filestore#egg=ckanext-s3filestore
+-e git+https://github.com/okfn/ckanext-envvars.git@0.0.1#egg=ckanext-envvars
+-e git+https://github.com/okfn/ckanext-s3filestore.git@v0.1.1#egg=ckanext-s3filestore
 
--e git+https://github.com/okfn/ckanext-envvars.git#egg=ckanext-envvars
--e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase
+-e git+https://github.com/ckan/ckanext-showcase.git@v1.1.0#egg=ckanext-showcase
+-e git+https://github.com/conwetlab/ckanext-datarequests.git@v1.1.0#egg=ckanext-datarequests
+
 -e git+https://github.com/ckan/ckanext-issues.git#egg=ckanext-issues
 
 -e git+https://github.com/ckan/ckanext-harvest.git@v1.1.4#egg=ckanext-harvest
--e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
+-e git+https://github.com/ckan/ckanext-dcat.git@v0.0.9#egg=ckanext-dcat
+
+-e git+https://github.com/ckan/ckanext-pdfview.git@0.0.5#egg=ckanext-pdfview
 
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
 -e git+https://github.com/jqnatividad/ckanext-officedocs.git#egg=ckanext-officedocs
