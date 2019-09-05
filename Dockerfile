@@ -15,4 +15,4 @@ ADD ckan.ini /ckan.ini
 
 ADD Procfile /Procfile
 
-CMD ["gunicorn", "--workers", "2", "--worker-class", "gevent", "--paste", "ckan.ini", "-t", "600"]
+CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--paste", "ckan.ini", "-t", "600"]
