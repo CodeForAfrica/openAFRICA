@@ -13,10 +13,12 @@ gevent==1.2.2
 
 -e git+https://github.com/ckan/ckanext-issues.git#egg=ckanext-issues
 
--e git+https://github.com/ckan/ckanext-harvest.git@v1.1.4#egg=ckanext-harvest
+-e git+https://github.com/ckan/ckanext-harvest.git@v1.2.1#egg=ckanext-harvest
 -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.9#egg=ckanext-dcat
 
 -e git+https://github.com/ckan/ckanext-pdfview.git@0.0.5#egg=ckanext-pdfview
 
 -e git+https://github.com/OpenUpSA/ckanext-gdoc.git#egg=ckanext-gdoc
 -e git+https://github.com/jqnatividad/ckanext-officedocs.git#egg=ckanext-officedocs
+
+-e git+https://github.com/okfn/ckanext-sentry.git@d3b1d1cf1f975b3672891012e6c75e176497db8f#egg=ckanext-sentry
