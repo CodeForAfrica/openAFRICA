@@ -16,6 +16,20 @@ services:
     volumes:
       - ./ckan.ini:/ckan.ini
       - ckan-filestore:/var/lib/ckan/default
+  
+  ckan_gather_consumer:
+    build: .
+    depends_on:
+        - db
+        - solr
+        - redis
+    env_file:
+      - .env
+    command: paster --plugin=ckanext-harvest harvester gather_consumer --config=ckan.ini
+    volumes:
+      - ./ckan.ini:/ckan.ini
+      - ckan-filestore:/var/lib/ckan/default
+  
 
   datapusher:
     build: contrib/ckan-datapusher
