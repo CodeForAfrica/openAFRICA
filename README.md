@@ -104,7 +104,7 @@ dokku docker-options:add ckan-solr run,deploy --volume ckan-solr:/opt/solr/serve
 sudo docker pull openafrica/solr:latest
 sudo docker tag openafrica/solr:latest dokku/ckan-solr:latest
 
-dokku tags:deploy ckan-solr latest
+dokku git:from-image ckan-solr dokku/ckan-solr:latest
 
 ```
 
@@ -128,7 +128,7 @@ dokku apps:create ckan-datapusher
 sudo docker pull openafrica/ckan-datapusher:latest
 sudo docker tag openafrica/ckan-datapusher:latest dokku/ckan-datapusher:latest
 
-dokku tags:deploy ckan-datapusher latest
+dokku git:from-image ckan-datapusher dokku/ckan-datapusher:latest
 
 ```
 
