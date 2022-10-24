@@ -37,7 +37,7 @@ services:
       - web
   
   db:
-    image: postgres:9.6
+    image: postgres:13.7
     ports:
       - "54321:5432"
     environment:
@@ -51,7 +51,7 @@ services:
       - ./contrib/postgres:/docker-entrypoint-initdb.d
   
   solr:
-    image: codeforafrica/ckan-solr:2.7.6
+    image: codeforafrica/ckan-solr:2.8.3
     ports:
         - "8983:8983"
     volumes:

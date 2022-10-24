@@ -14,16 +14,14 @@ We use CKAN's own vanilla releases but because they haven't properly adopted Doc
 The ckan extensions we are using include:
 
 - ckanext-openafrica - https://github.com/CodeForAfrica/ckanext-openafrica
-- ckanext-datarequests - https://github.com/CodeForAfricaLabs/ckanext-datarequests
+- ckanext-datarequests - https://github.com/conwetlab/ckanext-datarequests
 - ckanext-harvester - https://github.com/ckan/ckanext-harvest
-- ckanext-socialite (experimental) - https://github.com/CodeForAfricaLabs/ckanext-socialite
-- ckanext-social - https://github.com/CodeForAfricaLabs/ckanext-social
-- ckanext-notify - https://github.com/CodeForAfricaLabs/ckanext-notify
-- ckanext-s3filestore - https://github.com/CodeForAfricaLabs/ckanext-s3filestore
+- ckanext-s3filestore - https://github.com/okfn/ckanext-s3filestore
 - ckanext-showcase - https://github.com/ckan/ckanext-showcase
 - ckanext-googleanalytics - https://github.com/ckan/ckanext-googleanalytics
 - ckanext-issues - https://github.com/ckan/ckanext-issues
 - ckanext-gdoc - https://github.com/OpenUpSA/ckanext-gdoc
+- ckanext-envvars - https://github.com/okfn/ckanext-envvars/
 
 
 ---
