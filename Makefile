@@ -28,14 +28,14 @@ ckan:
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
-	docker push codeforafrica/ckan:2.7.6
+	docker push codeforafrica/ckan:2.8.3
 
 solr:
 	docker build --no-cache --build-arg CKAN_VERSION=2.8.3 -t codeforafrica/ckan-solr:latest -t codeforafrica/ckan-solr:2.8.3 contrib/solr
 
 solr-publish:
 	docker push codeforafrica/ckan-solr:latest
-	docker push codeforafrica/ckan-solr:2.7.6
+	docker push codeforafrica/ckan-solr:2.8.3
 
 
 datapusher:
