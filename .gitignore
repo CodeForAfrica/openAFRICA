@@ -105,7 +105,6 @@ ENV/
 ckan
 ckan/
 ckan-*.tar.gz
-
 # Env
 env*
 !env.tmpl
