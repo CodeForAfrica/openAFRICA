@@ -3,7 +3,7 @@ MAINTAINER Open Knowledge
 
 ## Taken from https://github.com/ckan/ckan/blob/ckan-2.7.0/contrib/docker/solr/Dockerfile
 # Updated the ARG values
-ARG CKAN_VERSION=2.8.3
+ARG CKAN_VERSION=2.8.11
 
 # Enviroment
 ENV SOLR_CORE ckan

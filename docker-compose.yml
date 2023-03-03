@@ -10,7 +10,7 @@ services:
         - solr
         - redis
     ports:
-        - "5000:5000"
+        - "5050:5000"
     env_file:
       - .env
     volumes:
@@ -51,7 +51,7 @@ services:
       - ./contrib/postgres:/docker-entrypoint-initdb.d
   
   solr:
-    image: codeforafrica/ckan-solr:2.8.3
+    image: codeforafrica/ckan-solr:2.8.11
     ports:
         - "8983:8983"
     volumes:

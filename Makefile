@@ -24,18 +24,18 @@ issues-init:
 
 
 ckan:
-	docker build --no-cache --build-arg CKAN_VERSION=2.8.3 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.8.3 contrib/ckan
+	docker build --no-cache --build-arg CKAN_VERSION=2.8.11 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.8.11 contrib/ckan
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
-	docker push codeforafrica/ckan:2.8.3
+	docker push codeforafrica/ckan:2.8.11
 
 solr:
-	docker build --no-cache --build-arg CKAN_VERSION=2.8.3 -t codeforafrica/ckan-solr:latest -t codeforafrica/ckan-solr:2.8.3 contrib/solr
+	docker build --no-cache --build-arg CKAN_VERSION=2.8.11 -t codeforafrica/ckan-solr:latest -t codeforafrica/ckan-solr:2.8.11 contrib/solr
 
 solr-publish:
 	docker push codeforafrica/ckan-solr:latest
-	docker push codeforafrica/ckan-solr:2.8.3
+	docker push codeforafrica/ckan-solr:2.8.11
 
 
 datapusher:
