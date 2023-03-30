@@ -4,11 +4,17 @@ EXPOSE 5000/tcp
 
 WORKDIR /
 
+# ADD ckanext-openafrica /pp/ckanext-openafrica
+# RUN python /src/ckanext-openafrica/setup.py develop
+
 ADD requirements.txt /requirements.txt
 RUN pip install -q -r /requirements.txt && \
     pip install -q -r /src/ckanext-s3filestore/requirements.txt && \
     pip install -q -r /src/ckanext-harvest/pip-requirements.txt && \
     pip install -q -r /src/ckanext-dcat/requirements.txt
+
+ADD ckanext-openafrica /pp/ckanext-openafrica
+RUN pip install -q -e /pp/ckanext-openafrica
 
 # RUN ln -s ./src/ckan/ckan/config/who.ini /who.ini
 ADD ckan.ini /ckan.ini

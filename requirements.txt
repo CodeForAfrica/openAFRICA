@@ -3,7 +3,9 @@ gevent==1.2.2
 
 # CKAN Extensions
 
--e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
+# -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git@ft/ui-changes#egg=ckanext-openafrica
+
+# Refrence local extensions ckanext-openafrica in /pp/ckanext-openafrica
 
 -e git+https://github.com/okfn/ckanext-envvars.git@0.0.1#egg=ckanext-envvars
 -e git+https://github.com/okfn/ckanext-s3filestore.git@v0.1.1#egg=ckanext-s3filestore
@@ -22,3 +24,5 @@ gevent==1.2.2
 -e git+https://github.com/jqnatividad/ckanext-officedocs.git#egg=ckanext-officedocs
 
 -e git+https://github.com/okfn/ckanext-sentry.git@d3b1d1cf1f975b3672891012e6c75e176497db8f#egg=ckanext-sentry
+
+# -e /pp/ckanext-openafrica
