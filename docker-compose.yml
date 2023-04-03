@@ -6,7 +6,7 @@ services:
   web:
     build: .
     depends_on:
-        - db
+        # - db
         - solr
         - redis
     ports:
@@ -20,7 +20,7 @@ services:
   ckan_gather_consumer:
     build: .
     depends_on:
-        - db
+        # - db
         - solr
         - redis
     env_file:
@@ -36,19 +36,20 @@ services:
     depends_on:
       - web
   
-  db:
-    image: postgres:13.7
-    ports:
-      - "54321:5432"
-    environment:
-      - POSTGRES_USER=ckan_default
-      - POSTGRES_PASSWORD=pass
-      - PGUSER=ckan_default
-      - PGPASSWORD=pass
-      - POSTGRES_ADD_DATABASES=datastore_default:datastore_default
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./contrib/postgres:/docker-entrypoint-initdb.d
+  # db:
+  #   image: postgres:13.7
+  #   ports:
+  #     - "54321:5432"
+  #   environment:
+  #     - POSTGRES_USER=ckan_default
+  #     - POSTGRES_PASSWORD=pass
+  #     - PGUSER=ckan_default
+  #     - PGPASSWORD=pass
+  #     - POSTGRES_ADD_DATABASES=datastore_default:datastore_default
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #     - ./contrib/postgres:/docker-entrypoint-initdb.d
+  # "postgresql://ckan_default:ckan_default@ckan-test.cfgmtx8ishfx.eu-west-1.rds.amazonaws.com:5432/ckan"
   
   solr:
     image: codeforafrica/ckan-solr:2.8.11

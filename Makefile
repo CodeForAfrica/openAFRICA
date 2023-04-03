@@ -24,7 +24,7 @@ issues-init:
 
 
 ckan:
-	docker build --no-cache --build-arg CKAN_VERSION=2.8.11 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.8.11 contrib/ckan
+	docker build --no-cache --build-arg CKAN_VERSION=2.8.3 -t codeforafrica/ckan:latest -t codeforafrica/ckan:2.8.11 contrib/ckan
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
