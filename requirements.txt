@@ -1,5 +1,5 @@
-gunicorn==19.7.1
-gevent==1.2.2
+gunicorn==19.7.0
+gevent==20.9.0
 
 # CKAN Extensions
 

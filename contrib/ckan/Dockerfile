@@ -1,10 +1,10 @@
-FROM python:2.7
+FROM python:3.8
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ARG CKAN_VERSION=2.8.3
+ARG CKAN_VERSION=2.9.0
 
-RUN pip install -U -q pip setuptools
+RUN pip install -U -q pip "setuptools<46.0.0"
 
 RUN pip install -q -e "git+https://github.com/ckan/ckan.git@ckan-${CKAN_VERSION}#egg=ckan"
 

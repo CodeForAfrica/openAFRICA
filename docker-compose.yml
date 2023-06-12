@@ -25,7 +25,7 @@ services:
         - redis
     env_file:
       - .env
-    command: paster --plugin=ckanext-harvest harvester gather_consumer --config=ckan.ini
+    command: ckan --config=ckan.ini --plugin=ckanext-harvest harvester gather_consumer 
     volumes:
       - ./ckan.ini:/ckan.ini
       - ckan-filestore:/var/lib/ckan/default
@@ -52,7 +52,7 @@ services:
   # "postgresql://ckan_default:ckan_default@ckan-test.cfgmtx8ishfx.eu-west-1.rds.amazonaws.com:5432/ckan"
   
   solr:
-    image: codeforafrica/ckan-solr:2.8.11
+    image: codeforafrica/ckan-solr:2.9.0
     ports:
         - "8983:8983"
     volumes:
