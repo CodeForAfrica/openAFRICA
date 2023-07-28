@@ -20,7 +20,7 @@ services:
   ckan_gather_consumer:
     build: .
     depends_on:
-        # - db
+        - db
         - solr
         - redis
     env_file:
