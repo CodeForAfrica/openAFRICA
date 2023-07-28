@@ -15,4 +15,9 @@ ADD ckan.ini /ckan.ini
 
 ADD Procfile /Procfile
 
-CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--paste", "ckan.ini", "-t", "600"]
+ADD entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+# CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--paste", "ckan.ini", "-t", "600"]
+CMD ["./entrypoint.sh"]
