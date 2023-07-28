@@ -17,7 +17,5 @@ ADD Procfile /Procfile
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /entrypoint.sh
+CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--ckan", "ckan.ini", "-t", "600"]
 
-# CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--paste", "ckan.ini", "-t", "600"]
-CMD ["./entrypoint.sh"]
