@@ -8,7 +8,5 @@ RUN pip install -U -q pip "setuptools<46.0.0"
 
 RUN pip install -q -e "git+https://github.com/ckan/ckan.git@ckan-${CKAN_VERSION}#egg=ckan"
 
-# ADD meta.py /src/ckan/ckan/model/meta.py
-
 RUN pip install -q -r /src/ckan/requirements.txt
 RUN pip install -q vdm==0.15 sqlalchemy==1.2.19

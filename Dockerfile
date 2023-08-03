@@ -10,10 +10,11 @@ RUN pip install -q -r /requirements.txt && \
     pip install -q -r /src/ckanext-harvest/pip-requirements.txt && \
     pip install -q -r /src/ckanext-dcat/requirements.txt
 
-# RUN ln -s ./src/ckan/ckan/config/who.ini /who.ini
 ADD ckan.ini /ckan.ini
+
+ADD wsgi.py /wsgi.py
 
 ADD Procfile /Procfile
 
-CMD ["gunicorn", "--workers", "3", "--worker-class", "gevent", "--ckan", "ckan.ini", "-t", "600"]
+CMD ["gunicorn", "--workers", "3", "-b", ":5000", "wsgi.py", "-t", "600"]
 
