@@ -1,5 +1,8 @@
 gunicorn==19.7.0
 gevent==20.9.0
+cryptography
+pyOpenSSL
+
 
 # CKAN Extensions
 
