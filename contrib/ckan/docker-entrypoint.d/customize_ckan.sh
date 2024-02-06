@@ -2,7 +2,7 @@
 
 #Setup CKAN Datarequests (Init DB)
 if [[ $CKAN__PLUGINS == *"datarequests"* ]]; then
-    ckan -c /srv/app/ckan.ini datarequests initdb
+    ckan -c /srv/app/ckan.ini datarequests init-db
 else
     echo "Datarequests extension not available"
 fi
