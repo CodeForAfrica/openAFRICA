@@ -26,11 +26,13 @@ RUN pip3 install -e git+https://github.com/qld-gov-au/ckanext-s3filestore.git#eg
     pip3 install -r ${APP_DIR}/src/ckanext-s3filestore/requirements.txt
 
 ## ckan GoogleAnalytics
-RUN pip3 install-e -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics && \
+RUN pip3 install -e git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics && \
     pip3 install -r ${APP_DIR}/src/ckanext-googleanalytics/requirements.txt
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
+# COPY ckanext-openafrica/* {APP_DIR}/src/ckanext-openafrica/
+# RUN cd {APP_DIR}/src/ckanext-openafrica && python3 setup.py develop
 
 # Copy custom initialization scripts
 # COPY docker-entrypoint.d/* /docker-entrypoint.d/

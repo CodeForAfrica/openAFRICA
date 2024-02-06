@@ -16,6 +16,7 @@ services:
     volumes:
       - ./ckan.ini:/ckan.ini
       - ckan-filestore:/var/lib/ckan/default
+      - ./ckanext-openafrica/:/srv/app/src/ckanext-openafrica/
   
   ckan_gather_consumer:
     build: .
