@@ -10,7 +10,6 @@ FROM ckan/ckan-dev:2.9
 # See README > Extending the base images for more details
 #
 # For instance:
-#
 ### OpenAfrica ###
 RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git@ft/ui-changes#egg=ckanext-openafrica
 
@@ -29,13 +28,17 @@ RUN pip3 install -e git+https://github.com/qld-gov-au/ckanext-s3filestore.git#eg
 RUN pip3 install -e git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics && \
     pip3 install -r ${APP_DIR}/src/ckanext-googleanalytics/requirements.txt
 
+## ckanext-showcase
+RUN pip3 install -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase && \
+    pip3 install -r ${APP_DIR}/src/ckanext-showcase/requirements.txt
+
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 # COPY ckanext-openafrica/* {APP_DIR}/src/ckanext-openafrica/
 # RUN cd {APP_DIR}/src/ckanext-openafrica && python3 setup.py develop
 
 # Copy custom initialization scripts
-# COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY contrib/ckan/docker-entrypoint.d/* /docker-entrypoint.d/
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
