@@ -1,9 +1,15 @@
-gunicorn==19.7.1
-gevent==1.2.2
+gunicorn==19.7.0
+gevent==20.9.0
+cryptography
+pyOpenSSL
+
 
 # CKAN Extensions
 
--e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
+-e git+https://github.com/CodeForAfrica/ckanext-openafrica.git@ft/ui-changes#egg=ckanext-openafrica
+# -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
+
+# -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
 -e git+https://github.com/okfn/ckanext-envvars.git@0.0.1#egg=ckanext-envvars
 -e git+https://github.com/okfn/ckanext-s3filestore.git@v0.1.1#egg=ckanext-s3filestore
