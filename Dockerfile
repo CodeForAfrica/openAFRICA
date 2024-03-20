@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.9
+FROM ckan/ckan-dev:2.9.10
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
@@ -11,13 +11,13 @@ FROM ckan/ckan-dev:2.9
 #
 # For instance:
 ### OpenAfrica ###
-RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git@ft/ui-changes#egg=ckanext-openafrica
+RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
 ### Datarequests
-RUN pip3 install -e git+https://github.com/qld-gov-au/ckanext-datarequests.git#egg=ckanext-datarequests
+RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-datarequests.git#egg=ckanext-datarequests
 
 ### Harvester ###
-RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest && \
+RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest && \
    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 
 ## s3filestore
@@ -32,22 +32,6 @@ RUN pip3 install -e git+https://github.com/ckan/ckanext-googleanalytics.git#egg=
 RUN pip3 install -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase && \
     pip3 install -r ${APP_DIR}/src/ckanext-showcase/requirements.txt
 
-# Clone the extension(s) your are writing for your own project in the `src` folder
-# to get them mounted in this image at runtime
-# COPY ckanext-openafrica/* {APP_DIR}/src/ckanext-openafrica/
-# RUN cd {APP_DIR}/src/ckanext-openafrica && python3 setup.py develop
 
 # Copy custom initialization scripts
 COPY contrib/ckan/docker-entrypoint.d/* /docker-entrypoint.d/
-
-# Apply any patches needed to CKAN core or any of the built extensions (not the
-# runtime mounted ones)
-# COPY patches ${APP_DIR}/patches
-
-# RUN for d in $APP_DIR/patches/*; do \
-#         if [ -d $d ]; then \
-#             for f in `ls $d/*.patch | sort -g`; do \
-#                 cd $SRC_DIR/`basename "$d"` && echo "$0: Applying patch $f to $SRC_DIR/`basename $d`"; patch -p1 < "$f" ; \
-#             done ; \
-#         fi ; \
-#     done
