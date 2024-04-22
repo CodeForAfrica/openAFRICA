@@ -9,8 +9,8 @@ else
 fi
 
 #BS3 Templates
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.base_public_folder=public-bs3
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.base_templates_folder=templates-bs3
+# ckan config-tool ${CKAN_INI} -s app:main -e ckan.base_public_folder=public-bs3
+# ckan config-tool ${CKAN_INI} -s app:main -e ckan.base_templates_folder=templates-bs3
 
 #Auth settings
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.create_user_via_web=true

@@ -1,11 +1,12 @@
-FROM ckan/ckan-base:2.9
+FROM ckan/ckan-base:2.10.4
 
 # Install any extensions needed by your CKAN instance
 ### OpenAfrica ###
+# RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 
 ### Datarequests
-RUN pip3 install -e git+https://github.com/qld-gov-au/ckanext-datarequests.git#egg=ckanext-datarequests
+RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-datarequests.git#egg=ckanext-datarequests
 
 ### Harvester ###
 RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest && \
