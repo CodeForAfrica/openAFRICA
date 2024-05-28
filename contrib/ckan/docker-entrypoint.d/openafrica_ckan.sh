@@ -19,7 +19,6 @@ ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.public_user_details=true
 #Auth settings, limit actions to sysadmin users
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_create_organizations=false
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_create_groups=false
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.create_dataset_if_not_in_organization=false
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_delete_groups=false
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_delete_organizations=false
 
