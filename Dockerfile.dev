@@ -44,7 +44,7 @@ RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-
 COPY ckanext-openafrica/ ${APP_DIR}/src/ckanext-openafrica
 RUN cd ${APP_DIR}/src/ckanext-openafrica && python3 setup.py develop
 
-COPY ckanext-datarequests/ {APP_DIR}/src/ckanext-datarequests/
+COPY ckanext-datarequests/ ${APP_DIR}/src/ckanext-datarequests
 RUN cd ${APP_DIR}/src/ckanext-datarequests && python3 setup.py develop
 
 # Copy custom initialization scripts
