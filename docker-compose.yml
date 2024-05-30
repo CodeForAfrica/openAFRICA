@@ -26,7 +26,8 @@ services:
     container_name: web
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      target: dev
     depends_on:
         - solr
         - redis
