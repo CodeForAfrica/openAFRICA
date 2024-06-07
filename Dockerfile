@@ -1,6 +1,8 @@
 # Base stage for shared dependencies and extensions
 FROM ckan/ckan-base:2.10.4 as base
 
+ENV PYTHONPATH=/usr/lib/python3.10/site-packages/
+ENV APP_DIR=/srv/app
 # Install any extensions needed by your CKAN instance
 ### Harvester ###
 RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest && \
@@ -20,11 +22,14 @@ RUN pip3 install -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext
 
 # Development stage
 FROM ckan/ckan-dev:2.10.4 as dev
-
+ENV PYTHONPATH=/usr/lib/python3.10/site-packages/
 ENV APP_DIR=/srv/app
 
 # Copy the base extensions installation from the base image
-COPY --from=base ${APP_DIR}/src ${APP_DIR}/src_extensions
+COPY --from=base ${PYTHONPATH} ${PYTHONPATH}/
+COPY --from=base ${APP_DIR} ${APP_DIR}/
+
+RUN chown -R ckan:ckan ${APP_DIR}
 
 # Clone the extension(s) you are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
