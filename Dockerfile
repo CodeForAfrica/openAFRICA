@@ -36,7 +36,6 @@ RUN pip3 install -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext
 # Copy custom initialization scripts
 COPY contrib/ckan/docker-entrypoint.d/* /docker-entrypoint.d/
 
-ENV PYTHONPATH=/usr/lib/python3.10/site-packages/
 ENV APP_DIR=/srv/app
 # Install any extensions needed by your CKAN instance
 ### Harvester ###
