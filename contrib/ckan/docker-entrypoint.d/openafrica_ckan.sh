@@ -16,6 +16,12 @@ fi
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.create_user_via_web=true
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.public_user_details=true
 
+#Auth settings, limit actions to sysadmin users
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_create_organizations=false
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_create_groups=false
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_delete_groups=false
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_delete_organizations=false
+
 
 #Dataset Settings
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.public_activity_stream_detail=true
@@ -28,5 +34,9 @@ ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.text_formats='text plai
 
 # Customize which image formats the image_view plugin will show
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.image_formats='png jpeg jpg gif'
+
+# reCAPTCHA
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.recaptcha.publickey=${CKAN_RECAPTCHA_PUBLIC_KEY}
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.recaptcha.privatekey=${CKAN_RECAPTCHA_PRIVATE_KEY}
 
 ckan config-tool ${CKAN_INI} -s DEFAULT "debug = false"
