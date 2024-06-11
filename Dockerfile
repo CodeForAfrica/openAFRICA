@@ -1,5 +1,4 @@
-# Base stage for shared dependencies and extensions
-FROM ckan/ckan-base:2.10.4 as base
+FROM ckan/ckan-base:2.10.4
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
 # - Also make sure all provide all extra configuration options, either by:
