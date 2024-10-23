@@ -40,8 +40,9 @@ ckan config-tool ${CKAN_INI} -s app:main -e ckan.recaptcha.publickey=${CKAN_RECA
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.recaptcha.privatekey=${CKAN_RECAPTCHA_PRIVATE_KEY}
 
 # Site Settings
-# Default requests.timeout value 5 seconds
-ckan config-tool ${CKAN_INI} -s app:main requests.timeout=${CKAN_REQUESTS_TIMEOUT}
 
+# Default requests.timeout value 5 seconds
+ckan config-tool ${CKAN_INI} -s app:main ckan.requests.timeout=${CKAN_REQUESTS_TIMEOUT}
+ckan config-tool ${CKAN_INI} -s app:main ckan.resource_proxy.timeout=${CKAN_RESOURCE_PROXY_TIMEOUT}
 
 ckan config-tool ${CKAN_INI} -s DEFAULT "debug = false"
