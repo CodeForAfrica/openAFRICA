@@ -10,7 +10,7 @@ FROM ckan/ckan-base:2.10.7-py3.10
 # See README > Extending the base images for more details
 #
 
-#https://github.com/ckan/ckan-docker/issues/196
+# https://github.com/ckan/ckan-docker/issues/196
 USER root
 RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
 USER ckan
