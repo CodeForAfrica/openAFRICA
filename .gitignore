@@ -104,11 +104,11 @@ ENV/
 # CKAN
 # !contrib/ckan/docker-entrypoint.d
 # ckan
-# ckan/
+contrib/ckan/ckan.ini
 ckan-*.tar.gz
 # Env
 env*
 !env.tmpl
 
-# IDE 
+# IDE
 .vscode/*

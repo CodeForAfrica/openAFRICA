@@ -1,4 +1,5 @@
-FROM ckan/ckan-base:2.10.4
+# FROM ckan/ckan-base:2.10.4
+FROM ckan/ckan-base:2.10.7-py3.10
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
 # - Also make sure all provide all extra configuration options, either by:
@@ -8,7 +9,12 @@ FROM ckan/ckan-base:2.10.4
 #
 # See README > Extending the base images for more details
 #
-# For instance:
+
+# https://github.com/ckan/ckan-docker/issues/196
+USER root
+RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
+USER ckan
+
 ### OpenAfrica ###
 RUN pip3 install -e git+https://github.com/CodeForAfrica/ckanext-openafrica.git#egg=ckanext-openafrica
 

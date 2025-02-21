@@ -26,11 +26,14 @@ services:
     container_name: web
     build:
       context: .
+      dockerfile: Dockerfile
     depends_on:
         - solr
         - redis
     ports:
         - "5050:5000"
+    volumes:
+      - ./contrib/ckan/ckan.ini:/srv/app/ckan.ini
     env_file:
       - .env
 
