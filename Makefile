@@ -28,7 +28,7 @@ issues-init:
 	docker compose exec web ckan -c ckan.ini issues init_db
 
 ckan:
-	docker buildx build --platform linux/amd64 --no-cache --build-arg CKAN_VERSION=$(CKAN_VERSION) -t codeforafrica/ckan:latest -t codeforafrica/ckan:$(CKAN_VERSION) -f Dockerfile .
+	docker buildx build --platform linux/amd64 --no-cache --build-arg CKAN_VERSION=$(CKAN_VERSION) --tag codeforafrica/ckan:latest --tag codeforafrica/ckan:$(CKAN_VERSION) .
 
 ckan-publish:
 	docker push codeforafrica/ckan:latest
