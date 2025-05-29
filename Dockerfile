@@ -1,5 +1,4 @@
-# FROM ckan/ckan-base:2.10.4
-FROM ckan/ckan-base:2.10.7-py3.10
+FROM ckan/ckan-base:2.10.8-py3.10
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
 # - Also make sure all provide all extra configuration options, either by:
