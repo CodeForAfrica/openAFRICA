@@ -24,7 +24,10 @@ services:
         test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
   web:
     container_name: web
-    image: codeforafrica/ckan:${CKAN_VERSION}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
     depends_on:
         - solr
         - redis
@@ -40,7 +43,7 @@ services:
       - "8800:8800"
 
   solr:
-    image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    image: ckan/ckan-solr:${CKAN_SOLR_VERSION}
     ports:
         - "8983:8983"
     volumes:
