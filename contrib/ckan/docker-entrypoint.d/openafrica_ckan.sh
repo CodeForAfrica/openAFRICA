@@ -15,6 +15,7 @@ fi
 #Auth settings
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.create_user_via_web=true
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.public_user_details=true
+ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.create_default_api_keys=true
 
 #Auth settings, limit actions to sysadmin users
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_create_organizations=false

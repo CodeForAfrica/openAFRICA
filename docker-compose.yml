@@ -27,24 +27,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    platform: linux/amd64
     depends_on:
         - solr
         - redis
     ports:
         - "5050:5000"
-    volumes:
-      - ./contrib/ckan/ckan.ini:/srv/app/ckan.ini
     env_file:
       - .env
 
   datapusher:
     container_name: datapusher
-    image: ckan/ckan-base-datapusher:0.0.20
+    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     ports:
       - "8800:8800"
 
   solr:
-    image: ckan/ckan-solr:2.10-solr8
+    image: ckan/ckan-solr:${CKAN_SOLR_VERSION}
     ports:
         - "8983:8983"
     volumes:
