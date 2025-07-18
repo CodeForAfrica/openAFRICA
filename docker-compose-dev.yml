@@ -1,0 +1,64 @@
+version: "3.7"
+
+# docker-compose build && docker-compose up
+
+services:
+  db:
+    container_name: db
+    # build:
+    #   context: contrib/postgres
+    #   dockerfile: Dockerfile
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - CKAN_DB_USER=${CKAN_DB_USER}
+      - CKAN_DB_PASSWORD=${CKAN_DB_PASSWORD}
+      - CKAN_DB=${CKAN_DB}
+      - DATASTORE_READONLY_USER=${DATASTORE_READONLY_USER}
+      - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
+      - DATASTORE_DB=${DATASTORE_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # image: codeforafrica/ckan:latest
+    depends_on:
+        - solr
+        - redis
+    ports:
+        - "5050:5000"
+    # volumes:
+    #   - ./contrib/ckan/ckan.ini:/srv/app/ckan.ini
+    env_file:
+      - .env
+
+  datapusher:
+    container_name: datapusher
+    image: ckan/ckan-base-datapusher:0.0.20
+    ports:
+      - "8800:8800"
+
+  solr:
+    image: ckan/ckan-solr:2.10-solr8
+    ports:
+        - "8983:8983"
+    volumes:
+      - solr-data:/opt/solr/server/solr/ckan
+
+  redis:
+    image: redis:latest
+
+
+volumes:
+  solr-data: {}
+  ckan-filestore: {}
+  pg_data: {}
