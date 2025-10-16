@@ -52,7 +52,7 @@ decisions when appropriate.
 
 This Code of Conduct applies within all [openAFRICA](https://open.africa/) community spaces, and also applies when
 an individual is officially representing the community in public spaces.
-Examples of representing our [openAFRICA](https://open.africa/) community include using an official e-mail address,
+Examples of representing the community include using an official e-mail address,
 posting via an official social media account, or acting as an appointed
 representative at an online or offline event.
 
