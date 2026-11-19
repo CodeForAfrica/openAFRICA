@@ -28,13 +28,7 @@ ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.user_delete_organizations=
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.public_activity_stream_detail=true
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.auth.allow_dataset_collaborators=false
 
-# Customize which text formats the text_view plugin will show
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.json_formats='json'
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.xml_formats='xml rdf rdf+xml owl+xml atom rss'
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.text_formats='text plain text/plain'
-
-# Customize which image formats the image_view plugin will show
-ckan config-tool ${CKAN_INI} -s app:main -e ckan.preview.image_formats='png jpeg jpg gif'
+# Preview formats (ckan.preview.*) use CKAN's built-in defaults.
 
 # reCAPTCHA
 ckan config-tool ${CKAN_INI} -s app:main -e ckan.recaptcha.publickey=${CKAN_RECAPTCHA_PUBLIC_KEY}
